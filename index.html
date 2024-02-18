@@ -330,7 +330,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script>
         function generateEstimate(event) {
-            event.preventDefault(); // Prevent the default form submission
+            event.preventDefault(); // Prevent default form submission
     
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF({
@@ -344,90 +344,69 @@
     
             // Function to format field names for better readability
             function formatFieldName(fieldName) {
-                // Add space before capital letters and capitalize the first letter
-                return fieldName.replace(/([A-Z])/g, ' $1').replace(/^./, function(str) { return str.toUpperCase(); });
+                return fieldName.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
             }
     
             // Initialize coordinates and settings
-            let y = 10; // Starting Y
-            let x = 20; // Starting X for the first column
-            const columnWidth = 80; // Width of each column
-            let contentEndY = 0; // To track the end Y position of the main content
+            let y = 20; // Starting Y with a bit more space
+            const xLeft = 15; // Left column X position
+            const xRight = 110; // Right column X position
+            const columnWidth = 95; // Adjusted width for both columns
     
-            // Draw thicker red border closer to the edge of the page
-            doc.setLineWidth(2); // Making the line thicker
-            doc.setDrawColor(255, 0, 0); // Red color
-            doc.rect(5, 5, 200, 287); // Adjusted rectangle closer to the edge with a margin of 5mm
-    
-            // Company Info centered at the top
-            doc.setFontSize(10);
-            const companyInfo = [
-                "Owen's Construction - Insurance Specialists",
-                "Phone: (330) 507-5195",
-                "Fax: (330) 792-7432",
-                "Email: mykal372002@yahoo.com",
-                "Website: www.owensroofs.com",
-                "Location: Austintown, Ohio",
-                "Fully Insured & Bonded - Professional Workmanship - 1 Year Labor Guarantee"
-            ];
-            companyInfo.forEach(info => {
-                doc.text(info, 105, y, { align: 'center' });
-                y += 5;
-            });
-    
-            // Estimate Title
-            y += 10; // Additional space before the title
-            doc.setFontSize(18);
-            doc.text("Owens Construction Roofing Estimate", 105, y, { align: 'center' });
-            y += 15; // Space after title before starting content
+            // Company Info and Title at the top
+            doc.setFontSize(12);
+            doc.text("Owen's Construction - Insurance Specialists", 105, y, { align: 'center' });
+            y += 6; // Adjusted spacing
+            doc.setFontSize(16);
+            doc.text("Roofing Estimate", 105, y, { align: 'center' });
+            y += 10; // Space before starting content
     
             // Estimate Content in two columns, excluding signature fields
-            doc.setFontSize(12);
             const excludedFields = ['Signature 1', 'Date 1', 'Signature 2', 'Date 2'];
             const entries = Array.from(formData.entries()).filter(entry => !excludedFields.includes(entry[0]));
+            let column = 'left';
     
-            entries.forEach(([key, value], index) => {
-                if (index === Math.ceil(entries.length / 2)) { // Move to second column halfway through
-                    x += columnWidth + 10; // 10mm gap between columns
-                    y = 65; // Adjusted top of the second column
+            entries.forEach(([key, value]) => {
+                if (column === 'left') {
+                    doc.setFontSize(10);
+                    const formattedKey = formatFieldName(key);
+                    doc.text(`${formattedKey}: ${value}`, xLeft, y);
+                    column = 'right';
+                } else {
+                    doc.text(`${formatFieldName(key)}: ${value}`, xRight, y);
+                    y += 7; // Move down after right column entry
+                    column = 'left'; // Switch back to left column
                 }
-                const formattedKey = formatFieldName(key);
-                doc.text(`${formattedKey}: ${value}`, x, y);
-                y += 7; // Line spacing
-                contentEndY = Math.max(contentEndY, y); // Update content end Y position
             });
     
-            // Terms and Conditions further down with smaller font
-            let termsY = contentEndY + 10; // Start below the main content
-            doc.setFontSize(9); // Smaller font size for Terms and Conditions
-            doc.text("Terms and Conditions", 105, termsY, { align: 'center' });
-            termsY += 5; // Space after title
-            let termsText = `All material is guaranteed to be as specified, and the above work to be performed in accordance with the drawings and specifications submitted for above work and completed in a substantial workmanlike manner for the sum of ${formData.get('agreedSum')}. Any alteration or deviation from above specifications involving extra costs will be executed only upon written orders, and will become an extra charge over and above the estimate. Owens Construction is not responsible for ice damage occurred on the roof. All agreements contingent upon strikes, accidents, or delays beyond our control. 50% money up front and 50% money on completion.
-    
-    Acceptance of Proposal: The parties agree to the work with the money given from the insurance company, at no cost above or below the written amount including the depreciation. Any unforeseen expenses will be taken up with the insurance company and adjuster as a supplement.
-    
-    IN ACCORDANCE AND PURSUANT TO THE TERMS AND CONDITIONS OF OHIO REVISED CODE SECTION 1345.23 "HOME SOLICITATION ACT" THE HOMEOWNER SHALL HAVE THREE (3) BUSINESS DAYS TO CANCEL THE FOREGOING PROPOSAL/CONTRACT BY MIDNIGHT OF THE THIRD DAY.`;
-            doc.splitTextToSize(termsText, 170).forEach((line) => {
-                doc.text(line, 20, termsY); // Start from left edge
-                termsY += 4; // Tighter line spacing for terms
+            // Terms and Conditions with adjusted positioning and smaller font
+            y += 10; // Additional space before Terms and Conditions
+            doc.setFontSize(9);
+            doc.text("Terms and Conditions", 105, y, { align: 'center' });
+            y += 5;
+            let termsText = `All material is guaranteed to be as specified. Any alteration from above specifications involving extra costs will be executed upon written orders. Owens Construction is not responsible for ice damage on the roof. All agreements are contingent upon strikes, accidents, or delays beyond our control. 50% payment upfront, and 50% upon completion.`;
+            doc.splitTextToSize(termsText, 180).forEach(line => {
+                doc.text(line, 15, y);
+                y += 4; // Tighter line spacing for terms
             });
     
             // Signature and Date fields below Terms and Conditions
-            termsY += 7; // Space after terms and conditions
+            y += 7; // Space after Terms and Conditions
             excludedFields.forEach(field => {
                 const value = formData.get(field) || '';
-                const formattedField = formatFieldName(field);
-                doc.text(`${formattedField}: ${value}`, 20, termsY);
-                termsY += 7; // Line spacing
+                doc.setFontSize(10);
+                doc.text(`${formatFieldName(field)}: ${value}`, xLeft, y);
+                y += 7;
             });
     
             // Save the PDF
             doc.save('RoofingEstimate.pdf');
         }
     
-        // Attach the event listener to the form's submit event
+        // Attach event listener to form's submit event
         document.getElementById('estimateForm').addEventListener('submit', generateEstimate);
     </script>
+
 
 
 
