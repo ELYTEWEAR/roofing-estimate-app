@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css"> <!-- Assuming your CSS styles are here -->
+    <title>Roofing Estimate</title>
+    <link rel="stylesheet" href="style.css"> <!-- Link to your CSS file -->
     <style>
         /* Your existing styles */
 
@@ -307,9 +307,9 @@
     </div>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-<script>
+    <script>
         function printContent() {
-            const content = document.getElementById('content').innerHTML;
+            const content = document.getElementById('printContainer').innerHTML;
             const printWindow = window.open('', '_blank');
             printWindow.document.open();
             printWindow.document.write('<html><head><title>Print</title></head><body>');
@@ -321,10 +321,5 @@
             printWindow.close();
         }
     </script>
-
-
-
-
-
 </body>
 </html>
