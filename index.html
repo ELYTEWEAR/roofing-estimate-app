@@ -303,9 +303,9 @@
         function generatePrintablePage(formData) {
             let printableContent = '<h1>Roofing Estimate</h1>';
             printableContent += '<h2>Customer Information</h2>';
-            printableContent += '<p>Name: ' + formData.get('name') + '</p>';
-            printableContent += '<p>Email: ' + formData.get('email') + '</p>';
-            printableContent += '<p>Phone: ' + formData.get('phone') + '</p>';
+            printableContent += '<p>Name: ' + formData.get('customerName') + '</p>';
+            printableContent += '<p>Email: ' + formData.get('customerEmail') + '</p>';
+            printableContent += '<p>Phone: ' + formData.get('customerPhone') + '</p>';
             // Add more fields as needed
 
             return printableContent;
@@ -322,6 +322,8 @@
         }
     });
 </script>
+
+
 
 </body>
 </html>
