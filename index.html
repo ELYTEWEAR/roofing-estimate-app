@@ -424,7 +424,7 @@ document.addEventListener('DOMContentLoaded', function() {
         printWindow.document.write('</body></html>');
         printWindow.document.close();
         printWindow.focus();
-
+    
         printWindow.onload = function() {
             html2canvas(printWindow.document.body).then(canvas => {
                 const imgData = canvas.toDataURL('image/png');
@@ -433,13 +433,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 const pageHeight = 295;
                 const imgHeight = canvas.height * imgWidth / canvas.width;
                 let heightLeft = imgHeight;
-
+    
                 pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
                 pdf.save('estimate.pdf');
                 printWindow.close();
             });
         };
     }
+
 });
 </script>
 
