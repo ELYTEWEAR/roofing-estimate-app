@@ -347,6 +347,9 @@
                 h1 {
                     margin-bottom: 20px;
                 }
+                h2 {
+                    margin-bottom: 10px;
+                }
                 p {
                     margin-bottom: 10px;
                 }
@@ -359,7 +362,16 @@
             newWindow.document.write(`<p>${estimateContent}</p>`);
             newWindow.document.write('</div>');
             newWindow.document.write('<div class="footer">');
-            newWindow.document.write('<p>Company Info Here</p>');
+            newWindow.document.write('<h2>Owen\'s Construction</h2>');
+            newWindow.document.write('<p>Insurance Specialists<br>');
+            newWindow.document.write('Phone: (330) 507-5195<br>');
+            newWindow.document.write('Fax: (330) 792-7432<br>');
+            newWindow.document.write('Email: <a href="mailto:mykal372002@yahoo.com">mykal372002@yahoo.com</a><br>');
+            newWindow.document.write('Website: <a href="https://www.owensroofs.com" target="_blank">www.owensroofs.com</a><br>');
+            newWindow.document.write('Location: Austintown, Ohio<br>');
+            newWindow.document.write('Fully Insured & Bonded<br>');
+            newWindow.document.write('Professional Workmanship<br>');
+            newWindow.document.write('1 Year Labor Guarantee</p>');
             newWindow.document.write('</div></body></html>');
     
             // Wait for a short delay for content to be fully rendered, then print
@@ -372,6 +384,7 @@
         // Attach the event listener to the form's submit event
         document.getElementById('estimateForm').addEventListener('submit', generateEstimate);
     </script>
+
 
 
 
