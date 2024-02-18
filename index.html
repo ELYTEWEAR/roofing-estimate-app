@@ -334,7 +334,21 @@
     
             const form = document.getElementById('estimateForm');
             const formData = new FormData(form);
+            const clientName = formData.get('clientName');
+            const agreedSum = formData.get('agreedSum');
             let estimateContent = '<div class="container" style="padding: 20px; border: 2px solid red; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin-top: 20px; max-width: 800px; margin: 0 auto; page-break-inside: avoid;">';
+            estimateContent += '<div style="position: absolute; top: 20px; right: 20px;">';
+            estimateContent += '<h2>Owen\'s Construction</h2>';
+            estimateContent += '<p>Insurance Specialists<br>';
+            estimateContent += 'Phone: (330) 507-5195<br>';
+            estimateContent += 'Fax: (330) 792-7432<br>';
+            estimateContent += 'Email: <a href="mailto:mykal372002@yahoo.com">mykal372002@yahoo.com</a><br>';
+            estimateContent += 'Website: <a href="https://www.owensroofs.com" target="_blank">www.owensroofs.com</a><br>';
+            estimateContent += 'Location: Austintown, Ohio<br>';
+            estimateContent += 'Fully Insured & Bonded<br>';
+            estimateContent += 'Professional Workmanship<br>';
+            estimateContent += '1 Year Labor Guarantee</p>';
+            estimateContent += '</div>'; // Close company info
             estimateContent += '<h1 style="text-align: center; margin-bottom: 20px;">Owens Construction Roofing Estimate</h1>';
             estimateContent += '<div class="estimate-content">';
     
@@ -343,19 +357,37 @@
             }
             
             // Terms and conditions section
-            estimateContent += '<section class="terms-and-conditions" style="margin-top: 40px;">';
+            estimateContent += '<section class="terms-and-conditions" style="margin-top: 40px; page-break-inside: avoid;">';
             estimateContent += '<h3 style="margin-bottom: 10px;">Terms and Conditions</h3>';
-            estimateContent += '<p>All material is guaranteed to be as specified, and the above work to be performed in accordance with the drawings and specifications submitted for above work and completed in a substantial workmanlike manner for the sum of <input type="number" name="agreedSum">. Any alteration or deviation from above specifications involving extra costs will be executed only upon written orders, and will become an extra charge over and above the estimate. Owens Construction is not responsible for ice damage occurred on the roof. All agreements contingent upon strikes, accidents, or delays beyond our control. 50% money up front and 50% money on completion.</p>';
-            estimateContent += '<p>Acceptance of Proposal: Owens Construction and <input type="text" name="clientName"> agree to the work with the money given from the insurance company, at no cost above or below the written amount including the depreciation. Any unforeseen expenses will be taken up with the insurance company and adjuster as a supplement.</p>';
+            estimateContent += `<p>All material is guaranteed to be as specified, and the above work to be performed in accordance with the drawings and specifications submitted for above work and completed in a substantial workmanlike manner for the sum of ${agreedSum}. Any alteration or deviation from above specifications involving extra costs will be executed only upon written orders, and will become an extra charge over and above the estimate. Owens Construction is not responsible for ice damage occurred on the roof. All agreements contingent upon strikes, accidents, or delays beyond our control. 50% money up front and 50% money on completion.</p>`;
+            estimateContent += `<p>Acceptance of Proposal: Owens Construction and ${clientName} agree to the work with the money given from the insurance company, at no cost above or below the written amount including the depreciation. Any unforeseen expenses will be taken up with the insurance company and adjuster as a supplement.</p>`;
             estimateContent += '<p>IN ACCORDANCE AND PURSUANT TO THE TERMS AND CONDITIONS OF OHIO REVISED CODE SECTION 1345.23 "HOME SOLICITATION ACT" THE HOMEOWNER SHALL HAVE THREE (3) BUSINESS DAYS TO CANCEL THE FOREGOING PROPOSAL/CONTRACT BY MIDNIGHT OF THE THIRD DAY.</p>';
             estimateContent += '</section>'; // Close terms-and-conditions section
+            
+            // Signatures section
+            estimateContent += '<section class="signatures" style="margin-top: 40px;">';
+            estimateContent += '<h3>Signatures</h3>';
+            estimateContent += '<div class="form-row">';
+            estimateContent += '<label for="signature1">Signature:</label>';
+            estimateContent += '<input type="text" id="signature1" name="signature1" class="signature">';
+            estimateContent += '<label for="date1">Date:</label>';
+            estimateContent += '<input type="date" id="date1" name="date1">';
+            estimateContent += '</div>';
+    
+            estimateContent += '<div class="form-row">';
+            estimateContent += '<label for="signature2">Signature:</label>';
+            estimateContent += '<input type="text" id="signature2" name="signature2" class="signature">';
+            estimateContent += '<label for="date2">Date:</label>';
+            estimateContent += '<input type="date" id="date2" name="date2">';
+            estimateContent += '</div>';
+            estimateContent += '</section>'; // Close signatures section
             
             estimateContent += '</div>'; // Close estimate-content
             estimateContent += '</div>'; // Close container
     
             // Open a new window to display the estimate
             const newWindow = window.open('', '_blank');
-            newWindow.document.write('<html><head><title>Roofing Estimate</title></head><body>');
+            newWindow.document.write('<html><head><title>Roofing Estimate</title><style>@media print { body { zoom: 0.75; } }</style></head><body>');
             newWindow.document.write(estimateContent);
             newWindow.document.write('</body></html>');
     
@@ -369,6 +401,7 @@
         // Attach the event listener to the form's submit event
         document.getElementById('estimateForm').addEventListener('submit', generateEstimate);
     </script>
+
 
 
 
