@@ -348,6 +348,11 @@
             let y = 10; // Starting Y
             let x = 20; // Starting X for the first column
             const columnWidth = 80; // Width of each column
+            const secondColumnStartY = 40; // Starting Y for the second column
+    
+            // Draw red border around the page
+            doc.setDrawColor(255, 0, 0); // Red color
+            doc.rect(10, 10, 190, 277); // Draw rectangle with a margin of 10mm
     
             // Company Info centered at the top
             doc.setFontSize(10);
@@ -370,8 +375,8 @@
             doc.setFontSize(18);
             doc.text("Owens Construction Roofing Estimate", 105, y, { align: 'center' });
     
-            // Reset Y for estimate content and increase X for the second column if needed
-            y += 15; // Space after title before starting content
+            // Reset Y for estimate content
+            y += 10; // Space after title before starting content
     
             // Estimate Content in two columns
             doc.setFontSize(12);
@@ -380,25 +385,32 @@
             entries.forEach(([key, value], index) => {
                 if (index === halfwayIdx) { // Move to second column
                     x += columnWidth + 10; // 10mm gap between columns
-                    y = 40; // Reset Y for second column to start below title
+                    y = secondColumnStartY; // Align top of the second column
                 }
                 doc.text(`${key}: ${value}`, x, y);
                 y += 7; // Line spacing
             });
     
-            // Terms and Conditions at the bottom across the full width
-            const termsY = 250; // Start Y for terms and conditions, adjust as needed
+            // Calculate Y for Terms and Conditions to avoid being cut off
+            let termsY = y + 5; // Ensure some space after the content before terms
+            if (termsY < secondColumnStartY + 50) { // Ensure it's not too high up
+                termsY = secondColumnStartY + 50;
+            }
+    
+            // Terms and Conditions across the full width
             doc.setFontSize(10);
             doc.text("Terms and Conditions", 105, termsY, { align: 'center' });
-            y = termsY + 5; // Space after title
+            termsY += 5; // Space after title
             let termsText = `All material is guaranteed to be as specified, and the above work to be performed in accordance with the drawings and specifications submitted for above work and completed in a substantial workmanlike manner for the sum of ${agreedSum}. Any alteration or deviation from above specifications involving extra costs will be executed only upon written orders, and will become an extra charge over and above the estimate. Owens Construction is not responsible for ice damage occurred on the roof. All agreements contingent upon strikes, accidents, or delays beyond our control. 50% money up front and 50% money on completion.
     
     Acceptance of Proposal: Owens Construction and ${clientName} agree to the work with the money given from the insurance company, at no cost above or below the written amount including the depreciation. Any unforeseen expenses will be taken up with the insurance company and adjuster as a supplement.
     
     IN ACCORDANCE AND PURSUANT TO THE TERMS AND CONDITIONS OF OHIO REVISED CODE SECTION 1345.23 "HOME SOLICITATION ACT" THE HOMEOWNER SHALL HAVE THREE (3) BUSINESS DAYS TO CANCEL THE FOREGOING PROPOSAL/CONTRACT BY MIDNIGHT OF THE THIRD DAY.`;
             doc.splitTextToSize(termsText, 170).forEach((line) => { // Full width for terms
-                doc.text(line, 20, y); // Start from left edge
-                y += 5;
+                if (termsY < 287) { // Ensure terms don't go beyond the page
+                    doc.text(line, 20, termsY); // Start from left edge
+                    termsY += 5;
+                }
             });
     
             // Save the PDF
@@ -408,6 +420,7 @@
         // Attach the event listener to the form's submit event
         document.getElementById('estimateForm').addEventListener('submit', generateEstimate);
     </script>
+
 
 
 
