@@ -334,68 +334,20 @@
     
             const form = document.getElementById('estimateForm');
             const formData = new FormData(form);
-            let estimateContent = '<div class="container">';
-            estimateContent += '<h1>Owens Construction Roofing Estimate</h1>';
+            let estimateContent = '<div class="container" style="padding: 20px; border: 2px solid red; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin-top: 20px;">';
+            estimateContent += '<h1 style="text-align: center; margin-bottom: 20px;">Owens Construction Roofing Estimate</h1>';
             estimateContent += '<div class="estimate-content">';
-            
+    
             for (const [key, value] of formData.entries()) {
                 estimateContent += `<p><strong>${key}:</strong> ${value}</p>`;
             }
-            
+    
             estimateContent += '</div>'; // Close estimate-content
-            estimateContent += '<div class="footer">';
-            estimateContent += '<h2>Owen\'s Construction</h2>';
-            estimateContent += '<p>Insurance Specialists<br>';
-            estimateContent += 'Phone: (330) 507-5195<br>';
-            estimateContent += 'Fax: (330) 792-7432<br>';
-            estimateContent += 'Email: <a href="mailto:mykal372002@yahoo.com">mykal372002@yahoo.com</a><br>';
-            estimateContent += 'Website: <a href="https://www.owensroofs.com" target="_blank">www.owensroofs.com</a><br>';
-            estimateContent += 'Location: Austintown, Ohio<br>';
-            estimateContent += 'Fully Insured & Bonded<br>';
-            estimateContent += 'Professional Workmanship<br>';
-            estimateContent += '1 Year Labor Guarantee</p>';
-            estimateContent += '</div>'; // Close footer
             estimateContent += '</div>'; // Close container
     
             // Open a new window to display the estimate
             const newWindow = window.open('', '_blank');
-            newWindow.document.write('<html><head><title>Roofing Estimate</title>');
-            newWindow.document.write('<style>');
-            newWindow.document.write(`
-                body {
-                    font-family: Arial, sans-serif;
-                    background-color: #f0f0f0;
-                }
-                .container {
-                    max-width: 800px;
-                    margin: 0 auto;
-                    background-color: #fff;
-                    padding: 20px;
-                    border-radius: 8px;
-                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-                    margin-top: 20px;
-                }
-                h1 {
-                    margin-bottom: 20px;
-                    text-align: center;
-                }
-                h2 {
-                    margin-bottom: 10px;
-                }
-                p {
-                    margin-bottom: 10px;
-                }
-                .footer {
-                    background-color: red;
-                    color: white;
-                    padding: 10px;
-                    text-align: center;
-                    position: fixed;
-                    bottom: 0;
-                    width: 100%;
-                }
-            `);
-            newWindow.document.write('</style></head><body>');
+            newWindow.document.write('<html><head><title>Roofing Estimate</title></head><body>');
             newWindow.document.write(estimateContent);
             newWindow.document.write('</body></html>');
     
@@ -409,6 +361,7 @@
         // Attach the event listener to the form's submit event
         document.getElementById('estimateForm').addEventListener('submit', generateEstimate);
     </script>
+
 
 </body>
 </html>
