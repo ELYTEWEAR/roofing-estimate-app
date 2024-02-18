@@ -304,8 +304,7 @@
                 let printableContent = '<h1>Roofing Estimate</h1>';
                 printableContent += '<h2>Customer Information</h2>';
                 printableContent += '<p>Name: ' + formData.get('customerName') + '</p>';
-                printableContent += '<p>Email: ' + formData.get('customerEmail') + '</p>';
-                printableContent += '<p>Phone: ' + formData.get('customerPhone') + '</p>';
+                printableContent += '<p>Address: ' + formData.get('customerAddress') + '</p>';
                 // Add more fields as needed
 
                 return printableContent;
@@ -318,7 +317,11 @@
                 printWindow.document.write(content);
                 printWindow.document.write('</body></html>');
                 printWindow.document.close();
-                printWindow.print();
+
+                // Wait for content to load before printing
+                setTimeout(function() {
+                    printWindow.print();
+                }, 500); // Adjust timeout as needed
             }
         });
     </script>
