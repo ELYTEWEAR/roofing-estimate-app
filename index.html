@@ -290,38 +290,38 @@
     </div>
 
     <script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const form = document.getElementById('estimateForm');
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('estimateForm');
 
-        form.addEventListener('submit', function(event) {
-            event.preventDefault();
-            const formData = new FormData(form);
-            const printablePage = generatePrintablePage(formData);
-            printPage(printablePage);
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const formData = new FormData(form);
+                const printablePage = generatePrintablePage(formData);
+                printPage(printablePage);
+            });
+
+            function generatePrintablePage(formData) {
+                let printableContent = '<h1>Roofing Estimate</h1>';
+                printableContent += '<h2>Customer Information</h2>';
+                printableContent += '<p>Name: ' + formData.get('customerName') + '</p>';
+                printableContent += '<p>Email: ' + formData.get('customerEmail') + '</p>';
+                printableContent += '<p>Phone: ' + formData.get('customerPhone') + '</p>';
+                // Add more fields as needed
+
+                return printableContent;
+            }
+
+            function printPage(content) {
+                const printWindow = window.open('', '_blank');
+                printWindow.document.open();
+                printWindow.document.write('<html><head><title>Printable Page</title></head><body>');
+                printWindow.document.write(content);
+                printWindow.document.write('</body></html>');
+                printWindow.document.close();
+                printWindow.print();
+            }
         });
-
-        function generatePrintablePage(formData) {
-            let printableContent = '<h1>Roofing Estimate</h1>';
-            printableContent += '<h2>Customer Information</h2>';
-            printableContent += '<p>Name: ' + formData.get('customerName') + '</p>';
-            printableContent += '<p>Email: ' + formData.get('customerEmail') + '</p>';
-            printableContent += '<p>Phone: ' + formData.get('customerPhone') + '</p>';
-            // Add more fields as needed
-
-            return printableContent;
-        }
-
-        function printPage(content) {
-            const printWindow = window.open('', '_blank');
-            printWindow.document.open();
-            printWindow.document.write('<html><head><title>Printable Page</title></head><body>');
-            printWindow.document.write(content);
-            printWindow.document.write('</body></html>');
-            printWindow.document.close();
-            printWindow.print();
-        }
-    });
-</script>
+    </script>
 
 
 
