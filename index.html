@@ -247,7 +247,7 @@
                 <h3>Total for Cost and Labor</h3>
                 <div class="form-row">
                     <label for="totalCost">Total for Cost and Labor: $</label>
-                    <input type="number" id="totalCost" name="totalCost" readonly>
+                    <input type="number" id="totalCost" name="totalCost" readonly value="0">
                 </div>
 
                 <div class="form-row">
@@ -335,10 +335,9 @@
             const squares = parseInt(formData.get('squares'));
             const costPerSquare = parseInt(formData.get('costPerSquare'));
             const totalCost = squares * costPerSquare;
-            printableContent += '<p>' + squares + '</p>';
-        
+            printableContent += '<p>' + (isNaN(squares) ? '0' : squares) + '</p>'; // Ensure showing 0 if NaN
             printableContent += '<h2>Total for Cost and Labor</h2>';
-            printableContent += '<p><strong>Total for Cost and Labor:</strong> $' + totalCost + '</p>';
+            printableContent += '<p><strong>Total for Cost and Labor:</strong> $' + (isNaN(totalCost) ? '0' : totalCost) + '</p>'; // Ensure showing 0 if NaN
             printableContent += '<p><strong>Miscellaneous:</strong> ' + formData.get('misc') + '</p>';
         
             printableContent += '<h2>Terms and Conditions</h2>';
@@ -380,12 +379,6 @@
         }
     });
 </script>
-
-
-
-
-
-
 
 </body>
 </html>
