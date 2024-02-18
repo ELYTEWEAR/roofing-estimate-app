@@ -330,7 +330,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script>
         function generateEstimate(event) {
-            event.preventDefault(); // Prevent default form submission
+            event.preventDefault(); // Prevent the default form submission
     
             const { jsPDF } = window.jspdf;
             const doc = new jsPDF({
@@ -414,9 +414,24 @@
             doc.save('RoofingEstimate.pdf');
         }
     
+        function updateTotalCost() {
+            const squares = document.getElementById('squares').value || 0;
+            const costPerSquare = document.querySelector('input[name="costPerSquare"]:checked').value;
+            const totalCost = squares * costPerSquare;
+            document.getElementById('totalCost').value = totalCost;
+        }
+    
         // Attach event listener to form's submit event
         document.getElementById('estimateForm').addEventListener('submit', generateEstimate);
+    
+        // Attach event listeners for squares and costPerSquare inputs to update total cost
+        document.getElementById('squares').addEventListener('input', updateTotalCost);
+        const costPerSquareOptions = document.querySelectorAll('input[name="costPerSquare"]');
+        costPerSquareOptions.forEach(option => {
+            option.addEventListener('change', updateTotalCost);
+        });
     </script>
+
 
 
 
