@@ -355,18 +355,6 @@
                     bottom: 0;
                     width: 100%;
                 }
-                @page {
-                    size: A4;
-                    margin: 20mm; /* Adjust margins as needed */
-                }
-                @media print {
-                    .container {
-                        page-break-inside: avoid;
-                    }
-                    .footer {
-                        display: block !important;
-                    }
-                }
             `);
             newWindow.document.write('</style></head><body>');
             newWindow.document.write('<div class="container">');
@@ -395,10 +383,5 @@
         // Attach the event listener to the form's submit event
         document.getElementById('estimateForm').addEventListener('submit', generateEstimate);
     </script>
-
-
-
-
-
 </body>
 </html>
