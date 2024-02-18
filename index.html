@@ -344,8 +344,8 @@
             const clientName = formData.get('clientName');
             const agreedSum = formData.get('agreedSum');
     
-            // Initialize Y coordinate and column X offset
-            let y = 10;
+            // Initialize coordinates
+            let y = 10; // Starting Y
             let x = 20; // Starting X for the first column
             const columnWidth = 80; // Width of each column
     
@@ -365,11 +365,13 @@
                 y += 5;
             });
     
-            // Reset Y for estimate content and increase X for the second column if needed
-            y = 30; // Reset Y below company info
+            // Estimate Title
+            y += 10; // Additional space before the title
             doc.setFontSize(18);
             doc.text("Owens Construction Roofing Estimate", 105, y, { align: 'center' });
-            y += 10; // Space before content
+    
+            // Reset Y for estimate content and increase X for the second column if needed
+            y += 15; // Space after title before starting content
     
             // Estimate Content in two columns
             doc.setFontSize(12);
@@ -378,28 +380,24 @@
             entries.forEach(([key, value], index) => {
                 if (index === halfwayIdx) { // Move to second column
                     x += columnWidth + 10; // 10mm gap between columns
-                    y = 40; // Reset Y for second column
+                    y = 40; // Reset Y for second column to start below title
                 }
                 doc.text(`${key}: ${value}`, x, y);
                 y += 7; // Line spacing
             });
     
-            // Check space for Terms and Conditions
-            const remainingSpace = 297 - y; // A4 height is 297mm
-            const termsStartY = remainingSpace > 40 ? y + 10 : 40; // Start in first or second column
-            const termsX = remainingSpace > 40 ? 20 : columnWidth + 30; // X position based on column
-    
-            // Terms and Conditions
+            // Terms and Conditions at the bottom across the full width
+            const termsY = 250; // Start Y for terms and conditions, adjust as needed
             doc.setFontSize(10);
-            doc.text("Terms and Conditions", termsX + (columnWidth / 2), termsStartY, { align: 'center' });
-            y = termsStartY + 5; // Space after title
+            doc.text("Terms and Conditions", 105, termsY, { align: 'center' });
+            y = termsY + 5; // Space after title
             let termsText = `All material is guaranteed to be as specified, and the above work to be performed in accordance with the drawings and specifications submitted for above work and completed in a substantial workmanlike manner for the sum of ${agreedSum}. Any alteration or deviation from above specifications involving extra costs will be executed only upon written orders, and will become an extra charge over and above the estimate. Owens Construction is not responsible for ice damage occurred on the roof. All agreements contingent upon strikes, accidents, or delays beyond our control. 50% money up front and 50% money on completion.
     
     Acceptance of Proposal: Owens Construction and ${clientName} agree to the work with the money given from the insurance company, at no cost above or below the written amount including the depreciation. Any unforeseen expenses will be taken up with the insurance company and adjuster as a supplement.
     
     IN ACCORDANCE AND PURSUANT TO THE TERMS AND CONDITIONS OF OHIO REVISED CODE SECTION 1345.23 "HOME SOLICITATION ACT" THE HOMEOWNER SHALL HAVE THREE (3) BUSINESS DAYS TO CANCEL THE FOREGOING PROPOSAL/CONTRACT BY MIDNIGHT OF THE THIRD DAY.`;
-            doc.splitTextToSize(termsText, columnWidth).forEach((line) => {
-                doc.text(line, termsX, y);
+            doc.splitTextToSize(termsText, 170).forEach((line) => { // Full width for terms
+                doc.text(line, 20, y); // Start from left edge
                 y += 5;
             });
     
@@ -410,6 +408,7 @@
         // Attach the event listener to the form's submit event
         document.getElementById('estimateForm').addEventListener('submit', generateEstimate);
     </script>
+
 
 
 
