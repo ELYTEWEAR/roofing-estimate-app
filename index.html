@@ -325,15 +325,7 @@
             newWindow.document.write(`
                 body {
                     font-family: Arial, sans-serif;
-                    padding: 0;
-                    margin: 0;
                     background-color: #f0f0f0;
-                }
-                .header, .footer {
-                    background-color: #ff0000;
-                    color: #fff;
-                    text-align: center;
-                    padding: 20px 0;
                 }
                 .container {
                     max-width: 800px;
@@ -353,12 +345,19 @@
                 p {
                     margin-bottom: 10px;
                 }
+                @page {
+                    size: A4;
+                    margin: 20mm; /* Adjust margins as needed */
+                }
+                @media print {
+                    .container {
+                        page-break-inside: avoid;
+                    }
+                }
             `);
             newWindow.document.write('</style></head><body>');
-            newWindow.document.write('<div class="header">');
-            newWindow.document.write('<h1>Owens Construction Roofing Estimate</h1>');
-            newWindow.document.write('</div>');
             newWindow.document.write('<div class="container">');
+            newWindow.document.write('<h1>Owens Construction Roofing Estimate</h1>');
             newWindow.document.write(`<p>${estimateContent}</p>`);
             newWindow.document.write('</div>');
             newWindow.document.write('<div class="footer">');
@@ -384,6 +383,7 @@
         // Attach the event listener to the form's submit event
         document.getElementById('estimateForm').addEventListener('submit', generateEstimate);
     </script>
+
 
 
 
