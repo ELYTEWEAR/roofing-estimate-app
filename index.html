@@ -341,8 +341,10 @@
     
             const form = document.getElementById('estimateForm');
             const formData = new FormData(form);
+            const clientName = formData.get('clientName'); // Assuming 'clientName' is part of your form
+            const agreedSum = formData.get('agreedSum'); // Assuming 'agreedSum' is part of your form
     
-            // Initialize coordinates
+            // Initialize coordinates and settings
             let y = 10; // Starting Y
             let x = 20; // Starting X for the first column
             const columnWidth = 80; // Width of each column
@@ -376,10 +378,9 @@
             // Reset Y for estimate content
             y += 20; // Space after title before starting content
     
-            // Estimate Content in two columns, excluding specific fields
+            // Estimate Content in two columns, excluding signature fields
             doc.setFontSize(12);
-            const excludedFields = ['Signature 1', 'Date 1', 'Signature 2', 'Date 2'];
-            const entries = Array.from(formData.entries()).filter(([key]) => !excludedFields.includes(key));
+            const entries = Array.from(formData.entries()).filter(entry => !['Signature 1', 'Date 1', 'Signature 2', 'Date 2'].includes(entry[0]));
             entries.forEach(([key, value], index) => {
                 if (index === Math.ceil(entries.length / 2)) { // Move to second column halfway through
                     x += columnWidth + 10; // 10mm gap between columns
@@ -389,8 +390,8 @@
                 y += 7; // Line spacing
             });
     
-            // Terms and Conditions closer to the bottom but within the page
-            let termsY = 210; // Adjusted Y position for terms and conditions to ensure visibility
+            // Terms and Conditions below the estimate content, ensuring it's visible
+            let termsY = Math.max(y, secondColumnStartY + 50); // Position below the longest column
             doc.setFontSize(10);
             doc.text("Terms and Conditions", 105, termsY, { align: 'center' });
             termsY += 5; // Space after title
@@ -400,18 +401,16 @@
     
     IN ACCORDANCE AND PURSUANT TO THE TERMS AND CONDITIONS OF OHIO REVISED CODE SECTION 1345.23 "HOME SOLICITATION ACT" THE HOMEOWNER SHALL HAVE THREE (3) BUSINESS DAYS TO CANCEL THE FOREGOING PROPOSAL/CONTRACT BY MIDNIGHT OF THE THIRD DAY.`;
             doc.splitTextToSize(termsText, 170).forEach((line) => { // Full width for terms
-                if (termsY < 287) { // Ensure terms don't go beyond the page
-                    doc.text(line, 20, termsY); // Start from left edge
-                    termsY += 5;
-                }
+                doc.text(line, 20, termsY); // Start from left edge
+                termsY += 5;
             });
     
-            // Signature fields below the Terms and Conditions
-            termsY += 5; // Additional space before signatures
-            excludedFields.forEach(field => {
-                const value = formData.get(field);
+            // Signature and Date fields below Terms and Conditions
+            termsY += 10; // Space after terms and conditions
+            ['Signature 1', 'Date 1', 'Signature 2', 'Date 2'].forEach(field => {
+                const value = formData.get(field) || '';
                 doc.text(`${field}: ${value}`, 20, termsY);
-                termsY += 7; // Line spacing for each field
+                termsY += 7; // Line spacing
             });
     
             // Save the PDF
@@ -421,6 +420,7 @@
         // Attach the event listener to the form's submit event
         document.getElementById('estimateForm').addEventListener('submit', generateEstimate);
     </script>
+
 
 
 
