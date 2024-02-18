@@ -306,10 +306,14 @@
             printableContent += 'h1, h2 { color: #007bff; }';
             printableContent += 'label { font-weight: bold; }';
             printableContent += 'p { margin-bottom: 10px; }';
+            printableContent += '.section { border-top: 1px solid #ccc; padding-top: 20px; }'; // Add section border and padding
+            printableContent += '.title { color: #007bff; font-size: 24px; margin-bottom: 10px; }'; // Style titles
+            printableContent += '.content { margin-left: 20px; }'; // Add margin to content for better readability
             printableContent += '</style>';
             
-            printableContent += '<h1>Estimate Sheet Roofing</h1>';
-            printableContent += '<h2>Owen\'s Construction</h2>';
+            printableContent += '<h1 class="title">Estimate Sheet Roofing</h1>';
+            printableContent += '<h2 class="title">Owen\'s Construction</h2>';
+            printableContent += '<div class="content">';
             printableContent += '<p>Insurance Specialists<br>';
             printableContent += 'Phone: (330) 507-5195<br>';
             printableContent += 'Fax: (330) 792-7432<br>';
@@ -319,12 +323,19 @@
             printableContent += 'Fully Insured & Bonded<br>';
             printableContent += 'Professional Workmanship<br>';
             printableContent += '1 Year Labor Guarantee</p>';
+            printableContent += '</div>';
         
-            printableContent += '<h2>Customer Information</h2>';
+            printableContent += '<div class="section">';
+            printableContent += '<h2 class="title">Customer Information</h2>';
+            printableContent += '<div class="content">';
             printableContent += '<p><strong>Customer Name:</strong> ' + formData.get('customerName') + '</p>';
             printableContent += '<p><strong>Customer Address:</strong> ' + formData.get('customerAddress') + '</p>';
+            printableContent += '</div>';
+            printableContent += '</div>';
             
-            printableContent += '<h2>Outside Work</h2>';
+            printableContent += '<div class="section">';
+            printableContent += '<h2 class="title">Outside Work</h2>';
+            printableContent += '<div class="content">';
             printableContent += '<p><strong>I will supply Labor and Material on a</strong></p>';
             printableContent += '<p>' + formatRoofPitch(formData.get('roofPitch')) + ' pitch roof.</p>';
             printableContent += '<p><strong>We will use</strong></p>';
@@ -336,20 +347,45 @@
             const costPerSquare = parseInt(formData.get('costPerSquare'));
             const totalCost = isNaN(squares) ? 0 : squares * costPerSquare;
             printableContent += '<p>' + (isNaN(squares) ? '0' : squares) + '</p>'; // Ensure showing 0 if NaN
-            printableContent += '<h2>Total for Cost and Labor</h2>';
+            printableContent += '</div>';
+            printableContent += '</div>';
+
+            // Additional fields
+            printableContent += '<div class="section">';
+            printableContent += '<h2 class="title">Additional Materials</h2>';
+            printableContent += '<div class="content">';
+            printableContent += '<p><strong>Nails:</strong> ' + formData.get('nails') + '</p>';
+            printableContent += '<p><strong>Drip Edge:</strong> ' + formData.get('dripEdge') + '</p>';
+            printableContent += '<p><strong>Rolls:</strong> ' + formData.get('rolls') + '</p>';
+            printableContent += '</div>';
+            printableContent += '</div>';
+        
+            printableContent += '<div class="section">';
+            printableContent += '<h2 class="title">Total for Cost and Labor</h2>';
+            printableContent += '<div class="content">';
             printableContent += '<p><strong>Total for Cost and Labor:</strong> $' + totalCost + '</p>';
             printableContent += '<p><strong>Miscellaneous:</strong> ' + formData.get('misc') + '</p>';
+            printableContent += '</div>';
+            printableContent += '</div>';
         
-            printableContent += '<h2>Terms and Conditions</h2>';
+            printableContent += '<div class="section">';
+            printableContent += '<h2 class="title">Terms and Conditions</h2>';
+            printableContent += '<div class="content">';
             printableContent += '<p>All material is guaranteed to be as specified, and the above work to be performed in accordance with the drawings and specifications submitted for above work and completed in a substantial workmanlike manner for the sum of $' + formData.get('agreedSum') + '. Any alteration or deviation from above specifications involving extra costs will be executed only upon written orders, and will become an extra charge over and above the estimate. Owens Construction is not responsible for ice damage occurred on the roof. All agreements contingent upon strikes, accidents, or delays beyond our control. 50% money up front and 50% money on completion.</p>';
             printableContent += '<p>Acceptance of Proposal: Owens Construction and ' + formData.get('clientName') + ' agree to the work with the money given from the insurance company, at no cost above or below the written amount including the depreciation. Any unforeseen expenses will be taken up with the insurance company and adjuster as a supplement.</p>';
             printableContent += '<p>IN ACCORDANCE AND PURSUANT TO THE TERMS AND CONDITIONS OF OHIO REVISED CODE SECTION 1345.23 "HOME SOLICITATION ACT" THE HOMEOWNER SHALL HAVE THREE (3) BUSINESS DAYS TO CANCEL THE FOREGOING PROPOSAL/CONTRACT BY MIDNIGHT OF THE THIRD DAY.</p>';
+            printableContent += '</div>';
+            printableContent += '</div>';
         
-            printableContent += '<h2>Signatures</h2>';
+            printableContent += '<div class="section">';
+            printableContent += '<h2 class="title">Signatures</h2>';
+            printableContent += '<div class="content">';
             printableContent += '<p><strong>Signature:</strong> ' + formData.get('signature1') + '</p>';
             printableContent += '<p><strong>Date:</strong> ' + formData.get('date1') + '</p>';
             printableContent += '<p><strong>Signature:</strong> ' + formData.get('signature2') + '</p>';
             printableContent += '<p><strong>Date:</strong> ' + formData.get('date2') + '</p>';
+            printableContent += '</div>';
+            printableContent += '</div>';
         
             return printableContent;
         }
@@ -376,7 +412,14 @@
         function printPage(content) {
             const printWindow = window.open('', '_blank');
             printWindow.document.open();
-            printWindow.document.write('<html><head><title>Printable Page</title></head><body>');
+            printWindow.document.write('<html><head><title>Printable Page</title>');
+            printWindow.document.write('<style>');
+            printWindow.document.write('body { font-family: Arial, sans-serif; color: red; }'); // Set text color to red
+            printWindow.document.write('.section { border-top: 1px solid #ccc; padding-top: 20px; }');
+            printWindow.document.write('.title { color: #007bff; font-size: 24px; margin-bottom: 10px; }');
+            printWindow.document.write('.content { margin-left: 20px; }');
+            printWindow.document.write('</style>');
+            printWindow.document.write('</head><body>');
             printWindow.document.write(content);
             printWindow.document.write('</body></html>');
             printWindow.document.close();
@@ -388,6 +431,7 @@
         }
     });
 </script>
+
 
 
 </body>
