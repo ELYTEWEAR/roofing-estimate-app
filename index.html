@@ -334,14 +334,22 @@
     
             const form = document.getElementById('estimateForm');
             const formData = new FormData(form);
-            let estimateContent = '<div class="container" style="padding: 20px; border: 2px solid red; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin-top: 20px;">';
+            let estimateContent = '<div class="container" style="padding: 20px; border: 2px solid red; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin-top: 20px; max-width: 800px; margin: 0 auto; page-break-inside: avoid;">';
             estimateContent += '<h1 style="text-align: center; margin-bottom: 20px;">Owens Construction Roofing Estimate</h1>';
             estimateContent += '<div class="estimate-content">';
     
             for (const [key, value] of formData.entries()) {
                 estimateContent += `<p><strong>${key}:</strong> ${value}</p>`;
             }
-    
+            
+            // Terms and conditions section
+            estimateContent += '<section class="terms-and-conditions" style="margin-top: 40px;">';
+            estimateContent += '<h3 style="margin-bottom: 10px;">Terms and Conditions</h3>';
+            estimateContent += '<p>All material is guaranteed to be as specified, and the above work to be performed in accordance with the drawings and specifications submitted for above work and completed in a substantial workmanlike manner for the sum of <input type="number" name="agreedSum">. Any alteration or deviation from above specifications involving extra costs will be executed only upon written orders, and will become an extra charge over and above the estimate. Owens Construction is not responsible for ice damage occurred on the roof. All agreements contingent upon strikes, accidents, or delays beyond our control. 50% money up front and 50% money on completion.</p>';
+            estimateContent += '<p>Acceptance of Proposal: Owens Construction and <input type="text" name="clientName"> agree to the work with the money given from the insurance company, at no cost above or below the written amount including the depreciation. Any unforeseen expenses will be taken up with the insurance company and adjuster as a supplement.</p>';
+            estimateContent += '<p>IN ACCORDANCE AND PURSUANT TO THE TERMS AND CONDITIONS OF OHIO REVISED CODE SECTION 1345.23 "HOME SOLICITATION ACT" THE HOMEOWNER SHALL HAVE THREE (3) BUSINESS DAYS TO CANCEL THE FOREGOING PROPOSAL/CONTRACT BY MIDNIGHT OF THE THIRD DAY.</p>';
+            estimateContent += '</section>'; // Close terms-and-conditions section
+            
             estimateContent += '</div>'; // Close estimate-content
             estimateContent += '</div>'; // Close container
     
@@ -361,6 +369,7 @@
         // Attach the event listener to the form's submit event
         document.getElementById('estimateForm').addEventListener('submit', generateEstimate);
     </script>
+
 
 
 </body>
