@@ -303,110 +303,88 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function generatePrintablePage(formData) {
         let printableContent = '<style>';
-        printableContent += 'body { font-family: Arial, sans-serif; color: #333; }';
-        printableContent += 'h1, h2 { color: #007bff; }';
-        printableContent += 'label { font-weight: bold; }';
-        printableContent += 'p { margin-bottom: 10px; }';
-        printableContent += '.section { border-top: 1px solid #ccc; padding-top: 20px; }';
-        printableContent += '.title { color: #007bff; font-size: 24px; margin-bottom: 10px; }';
-        printableContent += '.content { margin-left: 20px; }';
-        printableContent += 'input, select, textarea { border: none; color: #333; font-family: Arial, sans-serif; }';
-        printableContent += 'input[type="checkbox"] { appearance: none; width: 1em; height: 1em; background: #fff; border: 1px solid #333; }';
-        printableContent += 'input[type="checkbox"]:checked { background: #007bff; }';
+        printableContent += 'body { font-family: Arial, sans-serif; color: #333; margin: 0; padding: 20px; }';
+        printableContent += 'h1, h2 { color: black; }';
+        printableContent += 'p, li { margin-bottom: 10px; }';
+        printableContent += '.section { margin-top: 20px; }';
+        printableContent += '.title { font-weight: bold; margin-bottom: 10px; }';
+        printableContent += 'ul { list-style-type: none; padding: 0; }';
+        printableContent += 'li:before { content: "- "; }';
         printableContent += '</style>';
 
-        printableContent += '<h1 class="title">Estimate Sheet Roofing</h1>';
-        printableContent += '<h2 class="title">Owen\'s Construction</h2>';
-        printableContent += '<div class="content">';
-        printableContent += '<p>Insurance Specialists<br>';
-        printableContent += 'Phone: (330) 507-5195<br>';
-        printableContent += 'Fax: (330) 792-7432<br>';
-        printableContent += 'Email: mykal372002@yahoo.com<br>';
-        printableContent += 'Website: www.owensroofs.com<br>';
-        printableContent += 'Location: Austintown, Ohio<br>';
-        printableContent += 'Fully Insured & Bonded<br>';
-        printableContent += 'Professional Workmanship<br>';
-        printableContent += '1 Year Labor Guarantee</p>';
-        printableContent += '</div>';
+        printableContent += '<h1>Estimate Sheet Roofing</h1>';
+        printableContent += '<h2>Owen\'s Construction</h2>';
+        printableContent += '<p>Insurance Specialists</p>';
+        printableContent += '<p>Phone: (330) 507-5195</p>';
+        printableContent += '<p>Email: mykal372002@yahoo.com</p>';
+        printableContent += '<p>Website: www.owensroofs.com</p>';
+        printableContent += '<p>Location: Austintown, Ohio</p>';
+        printableContent += '<p>Fully Insured & Bonded</p>';
+        printableContent += '<p>Professional Workmanship</p>';
+        printableContent += '<p>1 Year Labor Guarantee</p>';
 
         printableContent += '<div class="section">';
         printableContent += '<h2 class="title">Customer Information</h2>';
-        printableContent += '<div class="content">';
-        printableContent += '<p>Customer Name: ' + formData.get('customerName') + '</p>';
-        printableContent += '<p>Customer Address: ' + formData.get('customerAddress') + '</p>';
-        printableContent += '</div>';
+        printableContent += '<p>Name: ' + formData.get('customerName') + '</p>';
+        printableContent += '<p>Address: ' + formData.get('customerAddress') + '</p>';
         printableContent += '</div>';
 
         printableContent += '<div class="section">';
         printableContent += '<h2 class="title">Outside Work</h2>';
-        printableContent += '<div class="content">';
-        printableContent += '<p>I will supply Labor and Material on a ' + formatRoofPitch(formData.get('roofPitch')) + ' pitch roof.</p>';
-        printableContent += '<p>We will use ' + formatShinglesType(formData.get('shinglesType')) + ' shingles.</p>';
-        printableContent += '<p>Shingle Color: ' + formData.get('shingleColor') + '</p>';
-        printableContent += '<p>Number of Squares: ' + formData.get('squares') + '</p>';
-        printableContent += '<p>Cost Per Square: $' + formatCostPerSquare(formData.get('costPerSquare')) + '</p>';
-        printableContent += '<p>Tear Off: ' + formatCheckbox(formData.get('tearOff')) + '</p>';
-        printableContent += '<p>New Drip Edge (Ln. Ft.): ' + formData.get('dripEdgeLength') + '</p>';
-        printableContent += '<p>Felt Weight: ' + formData.get('feltWeight') + ' lb on entire area of house.</p>';
-        printableContent += '<p>Ice and Water Guard: ' + formatCheckbox(formData.get('iceWaterGuard')) + '</p>';
-        printableContent += '<p>Re-flash ' + formData.get('chimneys') + ' chimneys.</p>';
-        printableContent += '<p>Weather in the Roof: ' + formatCheckbox(formData.get('weatherIn')) + '</p>';
-        printableContent += '<p>Replace up to ' + formData.get('plywoodSheets') + ' sheets of plywood related to your damage.</p>';
-        printableContent += '<p>Insulation Rating: Tear out any water damaged insulation and replace with R-' + formData.get('insulationRating') + '.</p>';
-        printableContent += '<p>Install new 6" inch boots for heating and stink pipes: ' + formData.get('bootsQuantity') + '</p>';
-        printableContent += '<p>Add new ridge vent on selective gables and apply ridge cap (Ln. Ft.): ' + formData.get('ridgeVentLength') + '</p>';
-        printableContent += '<p>Remove all box vents: ' + formData.get('boxVentsRemove') + '</p>';
-        printableContent += '<p>Add ice and water heavy duty to all valleys (Rolls): ' + formData.get('valleysRolls') + '</p>';
-        printableContent += '<p>Nails 1 1/4" (Boxes): ' + formData.get('nails1_25Boxes') + '</p>';
-        printableContent += '<p>Nails 1 3/4" (Boxes): ' + formData.get('nails1_75Boxes') + '</p>';
-        printableContent += '<p>Staples T-50\'s (Boxes): ' + formData.get('staplesBoxes') + '</p>';
-        printableContent += '<p>Plywood 7/16 OSB Sheets: ' + formData.get('plywoodSheetsOSB') + '</p>';
-        printableContent += '<p>Using 1 - 15 yd dumpster to haul away debris.</p>';
-        printableContent += '</div>';
+        printableContent += '<ul>';
+        printableContent += '<li>Labor and Material on a ' + formatRoofPitch(formData.get('roofPitch')) + ' pitch roof</li>';
+        printableContent += '<li>Shingles Type: ' + formatShinglesType(formData.get('shinglesType')) + '</li>';
+        printableContent += '<li>Shingle Color: ' + formData.get('shingleColor') + '</li>';
+        printableContent += '<li>Number of Squares: ' + formData.get('squares') + '</li>';
+        printableContent += '<li>Cost Per Square: $' + formatCostPerSquare(formData.get('costPerSquare')) + '</li>';
+        printableContent += '<li>Tear Off: ' + formatCheckbox(formData.get('tearOff')) + '</li>';
+        printableContent += '<li>New Drip Edge (Ln. Ft.): ' + formData.get('dripEdgeLength') + '</li>';
+        printableContent += '<li>Felt Weight: ' + formData.get('feltWeight') + ' lb</li>';
+        printableContent += '<li>Ice and Water Guard: ' + formatCheckbox(formData.get('iceWaterGuard')) + '</li>';
+        printableContent += '<li>Re-flash Chimneys: ' + formData.get('chimneys') + '</li>';
+        printableContent += '<li>Weather in the Roof: ' + formatCheckbox(formData.get('weatherIn')) + '</li>';
+        printableContent += '<li>Replace Plywood Sheets: ' + formData.get('plywoodSheets') + '</li>';
+        printableContent += '<li>Insulation Rating: R-' + formData.get('insulationRating') + '</li>';
+        printableContent += '<li>Install 6" inch Boots: ' + formData.get('bootsQuantity') + '</li>';
+        printableContent += '<li>Add Ridge Vent (Ln. Ft.): ' + formData.get('ridgeVentLength') + '</li>';
+        printableContent += '<li>Remove Box Vents: ' + formData.get('boxVentsRemove') + '</li>';
+        printableContent += '<li>Add Ice and Water to Valleys (Rolls): ' + formData.get('valleysRolls') + '</li>';
+        printableContent += '<li>Nails 1 1/4" (Boxes): ' + formData.get('nails1_25Boxes') + '</li>';
+        printableContent += '<li>Nails 1 3/4" (Boxes): ' + formData.get('nails1_75Boxes') + '</li>';
+        printableContent += '<li>Staples T-50\'s (Boxes): ' + formData.get('staplesBoxes') + '</li>';
+        printableContent += '<li>Plywood 7/16 OSB Sheets: ' + formData.get('plywoodSheetsOSB') + '</li>';
+        printableContent += '<li>Using 1 - 15 yd dumpster to haul away debris</li>';
+        printableContent += '</ul>';
         printableContent += '</div>';
 
         printableContent += '<div class="section">';
         printableContent += '<h2 class="title">Costs and Labor</h2>';
-        printableContent += '<div class="content">';
-        printableContent += '<p>Total for Cost and Labor: $' + formData.get('totalCost') + '</p>';
+        printableContent += '<p>Total Cost and Labor: $' + formData.get('totalCost') + '</p>';
         printableContent += '<p>Miscellaneous: ' + formData.get('misc') + '</p>';
-        printableContent += '</div>';
         printableContent += '</div>';
 
         printableContent += '<div class="section">';
         printableContent += '<h2 class="title">Terms and Conditions</h2>';
-        printableContent += '<div class="content">';
-        printableContent += '<p>All material is guaranteed to be as specified, and the above work to be performed in accordance with the drawings and specifications submitted for above work and completed in a substantial workmanlike manner for the sum of ' + formData.get('agreedSum') + '. Any alteration or deviation from above specifications involving extra costs will be executed only upon written orders, and will become an extra charge over and above the estimate. Owens Construction is not responsible for ice damage occurred on the roof. All agreements contingent upon strikes, accidents, or delays beyond our control. 50% money up front and 50% money on completion.</p>';
+        printableContent += '<p>All material is guaranteed to be as specified. Any alteration or deviation from above specifications involving extra costs will be executed only upon written orders, and will become an extra charge over and above the estimate. Owens Construction is not responsible for ice damage occurred on the roof. All agreements contingent upon strikes, accidents, or delays beyond our control. 50% money up front and 50% money on completion.</p>';
         printableContent += '<p>Acceptance of Proposal: Owens Construction and ' + formData.get('clientName') + ' agree to the work with the money given from the insurance company, at no cost above or below the written amount including the depreciation. Any unforeseen expenses will be taken up with the insurance company and adjuster as a supplement.</p>';
         printableContent += '<p>IN ACCORDANCE AND PURSUANT TO THE TERMS AND CONDITIONS OF OHIO REVISED CODE SECTION 1345.23 "HOME SOLICITATION ACT" THE HOMEOWNER SHALL HAVE THREE (3) BUSINESS DAYS TO CANCEL THE FOREGOING PROPOSAL/CONTRACT BY MIDNIGHT OF THE THIRD DAY.</p>';
-        printableContent += '</div>';
         printableContent += '</div>';
 
         printableContent += '<div class="section">';
         printableContent += '<h2 class="title">Signatures</h2>';
-        printableContent += '<div class="content">';
         printableContent += '<p>Signature: ' + formData.get('signature1') + ' Date: ' + formData.get('date1') + '</p>';
         printableContent += '<p>Signature: ' + formData.get('signature2') + ' Date: ' + formData.get('date2') + '</p>';
-        printableContent += '</div>';
         printableContent += '</div>';
 
         return printableContent;
     }
 
     function formatRoofPitch(pitch) {
-        if (pitch === 'flat') {
-            return 'Flat';
-        } else {
-            return pitch + ' pitch';
-        }
+        return pitch === 'flat' ? 'Flat' : `${pitch} pitch`;
     }
 
     function formatShinglesType(type) {
-        if (type === 'pinicleAtlas') {
-            return 'Pinicle Atlas';
-        } else {
-            return 'Other';
-        }
+        return type === 'pinicleAtlas' ? 'Pinicle Atlas' : 'Other';
     }
 
     function formatCostPerSquare(cost) {
@@ -421,7 +399,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const printWindow = window.open('', '_blank');
         printWindow.document.open();
         printWindow.document.write('<html><head><title>Print</title>');
-        printWindow.document.write('<style>* { font-family: Arial, sans-serif; } input, select, textarea { visibility: hidden; }</style>');
+        printWindow.document.write('<style>* { font-family: Arial, sans-serif; color: #333; } h1, h2 { color: black; } .title { font-weight: bold; } .section { margin-top: 20px; } p, li { margin-bottom: 10px; } ul { list-style-type: none; padding: 0; } li:before { content: "- "; }</style>');
         printWindow.document.write('</head><body>');
         printWindow.document.write(content);
         printWindow.document.write('</body></html>');
@@ -432,6 +410,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+
 
 
 
