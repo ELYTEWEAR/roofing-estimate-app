@@ -348,7 +348,7 @@
             let y = 10; // Starting Y
             let x = 20; // Starting X for the first column
             const columnWidth = 80; // Width of each column
-            const secondColumnStartY = 40; // Starting Y for the second column
+            let secondColumnStartY = 40; // Default starting Y for the second column
     
             // Draw red border around the page
             doc.setDrawColor(255, 0, 0); // Red color
@@ -381,9 +381,8 @@
             // Estimate Content in two columns
             doc.setFontSize(12);
             const entries = Array.from(formData.entries());
-            const halfwayIdx = Math.ceil(entries.length / 2);
             entries.forEach(([key, value], index) => {
-                if (index === halfwayIdx) { // Move to second column
+                if (key === "Boots") { // Check for "Boots" entry to start second column
                     x += columnWidth + 10; // 10mm gap between columns
                     y = secondColumnStartY; // Align top of the second column
                 }
@@ -391,11 +390,8 @@
                 y += 7; // Line spacing
             });
     
-            // Calculate Y for Terms and Conditions to avoid being cut off
-            let termsY = y + 5; // Ensure some space after the content before terms
-            if (termsY < secondColumnStartY + 50) { // Ensure it's not too high up
-                termsY = secondColumnStartY + 50;
-            }
+            // Adjust Y for Terms and Conditions to ensure visibility
+            let termsY = Math.max(y, secondColumnStartY + 100); // Use the larger of the two Y values
     
             // Terms and Conditions across the full width
             doc.setFontSize(10);
@@ -420,6 +416,7 @@
         // Attach the event listener to the form's submit event
         document.getElementById('estimateForm').addEventListener('submit', generateEstimate);
     </script>
+
 
 
 
