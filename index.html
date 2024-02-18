@@ -290,59 +290,60 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            const form = document.getElementById('estimateForm');
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('estimateForm');
 
-            form.addEventListener('submit', function(event) {
-                event.preventDefault();
-                const formData = new FormData(form);
-                const printablePage = generatePrintablePage(formData);
-                printPage(printablePage);
-            });
-
-            function generatePrintablePage(formData) {
-                let printableContent = '<h1>Roofing Estimate</h1>';
-                printableContent += '<h2>Customer Information</h2>';
-                printableContent += '<p>Name: ' + formData.get('customerName') + '</p>';
-                printableContent += '<p>Address: ' + formData.get('customerAddress') + '</p>';
-                printableContent += '<h2>Outside Work</h2>';
-                printableContent += '<p>Roof Pitch: ' + formData.get('roofPitch') + '</p>';
-                printableContent += '<p>Shingles Type: ' + formData.get('shinglesType') + '</p>';
-                printableContent += '<p>Shingle Color: ' + formData.get('shingleColor') + '</p>';
-                printableContent += '<p>Number of Squares: ' + formData.get('squares') + '</p>';
-                // Include all other form fields similarly
-                printableContent += '<h2>Total for Cost and Labor</h2>';
-                printableContent += '<p>Total Cost: $' + formData.get('totalCost') + '</p>';
-                printableContent += '<p>Miscellaneous: ' + formData.get('misc') + '</p>';
-                printableContent += '<h2>Terms and Conditions</h2>';
-                printableContent += '<p>Agreed Sum: $' + formData.get('agreedSum') + '</p>';
-                printableContent += '<p>Client Name: ' + formData.get('clientName') + '</p>';
-                // Include all other terms and conditions fields similarly
-                printableContent += '<h2>Signatures</h2>';
-                printableContent += '<p>Signature 1: ' + formData.get('signature1') + '</p>';
-                printableContent += '<p>Date 1: ' + formData.get('date1') + '</p>';
-                printableContent += '<p>Signature 2: ' + formData.get('signature2') + '</p>';
-                printableContent += '<p>Date 2: ' + formData.get('date2') + '</p>';
-            
-                return printableContent;
-            }
-
-
-            function printPage(content) {
-                const printWindow = window.open('', '_blank');
-                printWindow.document.open();
-                printWindow.document.write('<html><head><title>Printable Page</title></head><body>');
-                printWindow.document.write(content);
-                printWindow.document.write('</body></html>');
-                printWindow.document.close();
-
-                // Wait for content to load before printing
-                setTimeout(function() {
-                    printWindow.print();
-                }, 500); // Adjust timeout as needed
-            }
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(form);
+            const printablePage = generatePrintablePage(formData);
+            printPage(printablePage);
         });
-    </script>
+
+        function generatePrintablePage(formData) {
+            let printableContent = '<h1>Roofing Estimate</h1>';
+            printableContent += '<h2>Customer Information</h2>';
+            printableContent += '<p>Name: ' + formData.get('customerName') + '</p>';
+            printableContent += '<p>Address: ' + formData.get('customerAddress') + '</p>';
+            printableContent += '<h2>Outside Work</h2>';
+            printableContent += '<p>Roof Pitch: ' + formData.get('roofPitch') + '</p>';
+            printableContent += '<p>Shingles Type: ' + formData.get('shinglesType') + '</p>';
+            printableContent += '<p>Shingle Color: ' + formData.get('shingleColor') + '</p>';
+            printableContent += '<p>Number of Squares: ' + formData.get('squares') + '</p>';
+            // Include all other form fields similarly
+            printableContent += '<h2>Total for Cost and Labor</h2>';
+            printableContent += '<p>Total Cost: $' + formData.get('totalCost') + '</p>';
+            printableContent += '<p>Miscellaneous: ' + formData.get('misc') + '</p>';
+            printableContent += '<h2>Terms and Conditions</h2>';
+            printableContent += '<p>Agreed Sum: $' + formData.get('agreedSum') + '</p>';
+            printableContent += '<p>Client Name: ' + formData.get('clientName') + '</p>';
+            // Include all other terms and conditions fields similarly
+            printableContent += '<h2>Signatures</h2>';
+            printableContent += '<p>Signature 1: ' + formData.get('signature1') + '</p>';
+            printableContent += '<p>Date 1: ' + formData.get('date1') + '</p>';
+            printableContent += '<p>Signature 2: ' + formData.get('signature2') + '</p>';
+            printableContent += '<p>Date 2: ' + formData.get('date2') + '</p>';
+
+            return printableContent;
+        }
+
+
+        function printPage(content) {
+            const printWindow = window.open('', '_blank');
+            printWindow.document.open();
+            printWindow.document.write('<html><head><title>Printable Page</title></head><body>');
+            printWindow.document.write(content);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+
+            // Wait for content to load before printing
+            setTimeout(function() {
+                printWindow.print();
+            }, 500); // Adjust timeout as needed
+        }
+    });
+</script>
+
 
 
 
