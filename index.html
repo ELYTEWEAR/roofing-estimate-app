@@ -364,24 +364,6 @@
             estimateContent += '<p>IN ACCORDANCE AND PURSUANT TO THE TERMS AND CONDITIONS OF OHIO REVISED CODE SECTION 1345.23 "HOME SOLICITATION ACT" THE HOMEOWNER SHALL HAVE THREE (3) BUSINESS DAYS TO CANCEL THE FOREGOING PROPOSAL/CONTRACT BY MIDNIGHT OF THE THIRD DAY.</p>';
             estimateContent += '</section>'; // Close terms-and-conditions section
             
-            // Signatures section
-            estimateContent += '<section class="signatures" style="margin-top: 40px;">';
-            estimateContent += '<h3>Signatures</h3>';
-            estimateContent += '<div class="form-row">';
-            estimateContent += '<label for="signature1">Signature:</label>';
-            estimateContent += '<input type="text" id="signature1" name="signature1" class="signature">';
-            estimateContent += '<label for="date1">Date:</label>';
-            estimateContent += '<input type="date" id="date1" name="date1">';
-            estimateContent += '</div>';
-    
-            estimateContent += '<div class="form-row">';
-            estimateContent += '<label for="signature2">Signature:</label>';
-            estimateContent += '<input type="text" id="signature2" name="signature2" class="signature">';
-            estimateContent += '<label for="date2">Date:</label>';
-            estimateContent += '<input type="date" id="date2" name="date2">';
-            estimateContent += '</div>';
-            estimateContent += '</section>'; // Close signatures section
-            
             estimateContent += '</div>'; // Close estimate-content
             estimateContent += '</div>'; // Close container
     
@@ -401,6 +383,7 @@
         // Attach the event listener to the form's submit event
         document.getElementById('estimateForm').addEventListener('submit', generateEstimate);
     </script>
+
 
 
 
