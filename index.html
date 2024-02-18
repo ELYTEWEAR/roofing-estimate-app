@@ -312,11 +312,28 @@
     
             const form = document.getElementById('estimateForm');
             const formData = new FormData(form);
-            let estimateContent = '';
-    
+            let estimateContent = '<div class="container">';
+            estimateContent += '<h1>Owens Construction Roofing Estimate</h1>';
+            estimateContent += '<div class="estimate-content">';
+            
             for (const [key, value] of formData.entries()) {
-                estimateContent += `${key}: ${value}<br>`;
+                estimateContent += `<p><strong>${key}:</strong> ${value}</p>`;
             }
+            
+            estimateContent += '</div>'; // Close estimate-content
+            estimateContent += '<div class="footer">';
+            estimateContent += '<h2>Owen\'s Construction</h2>';
+            estimateContent += '<p>Insurance Specialists<br>';
+            estimateContent += 'Phone: (330) 507-5195<br>';
+            estimateContent += 'Fax: (330) 792-7432<br>';
+            estimateContent += 'Email: <a href="mailto:mykal372002@yahoo.com">mykal372002@yahoo.com</a><br>';
+            estimateContent += 'Website: <a href="https://www.owensroofs.com" target="_blank">www.owensroofs.com</a><br>';
+            estimateContent += 'Location: Austintown, Ohio<br>';
+            estimateContent += 'Fully Insured & Bonded<br>';
+            estimateContent += 'Professional Workmanship<br>';
+            estimateContent += '1 Year Labor Guarantee</p>';
+            estimateContent += '</div>'; // Close footer
+            estimateContent += '</div>'; // Close container
     
             // Open a new window to display the estimate
             const newWindow = window.open('', '_blank');
@@ -357,21 +374,8 @@
                 }
             `);
             newWindow.document.write('</style></head><body>');
-            newWindow.document.write('<div class="container">');
-            newWindow.document.write('<h1>Owens Construction Roofing Estimate</h1>');
-            newWindow.document.write(`<p>${estimateContent}</p>`);
-            newWindow.document.write('<div class="footer">');
-            newWindow.document.write('<h2>Owen\'s Construction</h2>');
-            newWindow.document.write('<p>Insurance Specialists<br>');
-            newWindow.document.write('Phone: (330) 507-5195<br>');
-            newWindow.document.write('Fax: (330) 792-7432<br>');
-            newWindow.document.write('Email: <a href="mailto:mykal372002@yahoo.com">mykal372002@yahoo.com</a><br>');
-            newWindow.document.write('Website: <a href="https://www.owensroofs.com" target="_blank">www.owensroofs.com</a><br>');
-            newWindow.document.write('Location: Austintown, Ohio<br>');
-            newWindow.document.write('Fully Insured & Bonded<br>');
-            newWindow.document.write('Professional Workmanship<br>');
-            newWindow.document.write('1 Year Labor Guarantee</p>');
-            newWindow.document.write('</div></div></body></html>');
+            newWindow.document.write(estimateContent);
+            newWindow.document.write('</body></html>');
     
             // Wait for a short delay for content to be fully rendered, then print
             setTimeout(() => {
@@ -383,5 +387,6 @@
         // Attach the event listener to the form's submit event
         document.getElementById('estimateForm').addEventListener('submit', generateEstimate);
     </script>
+
 </body>
 </html>
