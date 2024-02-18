@@ -313,37 +313,24 @@
             let estimateContent = '';
 
             for (const [key, value] of formData.entries()) {
-                estimateContent += `${key}: ${value}\n`;
+                estimateContent += `${key}: ${value}<br>`;
             }
 
-            // Generate PDF
-            const pdf = new jsPDF();
-            pdf.text(10, 10, estimateContent);
+            // Open a new window to display the estimate
+            const newWindow = window.open('', '_blank');
+            newWindow.document.write('<html><head><title>Roofing Estimate</title></head><body>');
+            newWindow.document.write('<div class="container">');
+            newWindow.document.write('<h1>Owens Construction Roofing Estimate</h1>');
+            newWindow.document.write(`<p>${estimateContent}</p>`);
+            newWindow.document.write('</div></body></html>');
 
-            try {
-                // Try to save the PDF
-                pdf.save('roofing_estimate.pdf');
+            // Auto print after opening the new window
+            newWindow.print();
 
-                // Open a new window to display the container content
-                const newWindow = window.open('', '_blank');
-                newWindow.document.write('<html><head><title>Roofing Estimate</title></head><body>');
-                newWindow.document.write('<div class="container">');
-                newWindow.document.write(document.querySelector('.container').innerHTML);
-                newWindow.document.write('</div></body></html>');
-
-                // Auto print after opening the new window
-                newWindow.print();
-
-                // Close the new window after printing
-                newWindow.onafterprint = function() {
-                    newWindow.close();
-                };
-            } catch (error) {
-                // Handle any errors that occur during PDF generation
-                console.error('Error generating PDF:', error);
-            }
-
-            return false; // Prevent form submission
+            // Close the new window after printing
+            newWindow.onafterprint = function() {
+                newWindow.close();
+            };
         }
     </script>
 </body>
