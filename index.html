@@ -310,25 +310,31 @@ document.addEventListener('DOMContentLoaded', function() {
         printableContent += '.title { font-weight: bold; margin-bottom: 10px; }';
         printableContent += 'ul { list-style-type: none; padding: 0; }';
         printableContent += 'li:before { content: "- "; }';
+        printableContent += 'a { text-decoration: none; color: #007bff; }';
+        printableContent += 'a:hover { text-decoration: underline; }';
         printableContent += '</style>';
 
         printableContent += '<h1>Estimate Sheet Roofing</h1>';
         printableContent += '<h2>Owen\'s Construction</h2>';
-        printableContent += '<p>Insurance Specialists</p>';
-        printableContent += '<p>Phone: (330) 507-5195</p>';
-        printableContent += '<p>Email: mykal372002@yahoo.com</p>';
-        printableContent += '<p>Website: www.owensroofs.com</p>';
-        printableContent += '<p>Location: Austintown, Ohio</p>';
-        printableContent += '<p>Fully Insured & Bonded</p>';
-        printableContent += '<p>Professional Workmanship</p>';
-        printableContent += '<p>1 Year Labor Guarantee</p>';
+        printableContent += '<div class="content">';
+        printableContent += '<p>Insurance Specialists<br>';
+        printableContent += 'Phone: (330) 507-5195<br>';
+        printableContent += 'Email: <a href="mailto:mykal372002@yahoo.com">mykal372002@yahoo.com</a><br>';
+        printableContent += 'Website: <a href="https://www.owensroofs.com" target="_blank">www.owensroofs.com</a><br>';
+        printableContent += 'Location: Austintown, Ohio<br>';
+        printableContent += 'Fully Insured & Bonded<br>';
+        printableContent += 'Professional Workmanship<br>';
+        printableContent += '1 Year Labor Guarantee</p>';
+        printableContent += '</div>';
 
+        // Customer Information Section
         printableContent += '<div class="section">';
         printableContent += '<h2 class="title">Customer Information</h2>';
         printableContent += '<p>Name: ' + formData.get('customerName') + '</p>';
         printableContent += '<p>Address: ' + formData.get('customerAddress') + '</p>';
         printableContent += '</div>';
 
+        // Outside Work Section
         printableContent += '<div class="section">';
         printableContent += '<h2 class="title">Outside Work</h2>';
         printableContent += '<ul>';
@@ -357,12 +363,14 @@ document.addEventListener('DOMContentLoaded', function() {
         printableContent += '</ul>';
         printableContent += '</div>';
 
+        // Costs and Labor Section
         printableContent += '<div class="section">';
         printableContent += '<h2 class="title">Costs and Labor</h2>';
         printableContent += '<p>Total Cost and Labor: $' + formData.get('totalCost') + '</p>';
         printableContent += '<p>Miscellaneous: ' + formData.get('misc') + '</p>';
         printableContent += '</div>';
 
+        // Terms and Conditions Section
         printableContent += '<div class="section">';
         printableContent += '<h2 class="title">Terms and Conditions</h2>';
         printableContent += '<p>All material is guaranteed to be as specified. Any alteration or deviation from above specifications involving extra costs will be executed only upon written orders, and will become an extra charge over and above the estimate. Owens Construction is not responsible for ice damage occurred on the roof. All agreements contingent upon strikes, accidents, or delays beyond our control. 50% money up front and 50% money on completion.</p>';
@@ -370,6 +378,7 @@ document.addEventListener('DOMContentLoaded', function() {
         printableContent += '<p>IN ACCORDANCE AND PURSUANT TO THE TERMS AND CONDITIONS OF OHIO REVISED CODE SECTION 1345.23 "HOME SOLICITATION ACT" THE HOMEOWNER SHALL HAVE THREE (3) BUSINESS DAYS TO CANCEL THE FOREGOING PROPOSAL/CONTRACT BY MIDNIGHT OF THE THIRD DAY.</p>';
         printableContent += '</div>';
 
+        // Signatures Section
         printableContent += '<div class="section">';
         printableContent += '<h2 class="title">Signatures</h2>';
         printableContent += '<p>Signature: ' + formData.get('signature1') + ' Date: ' + formData.get('date1') + '</p>';
@@ -410,6 +419,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 </script>
+
 
 
 
