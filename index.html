@@ -307,39 +307,47 @@
     </div>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-<script>
-    function generateEstimate() {
-        const form = document.getElementById('estimateForm');
-        const formData = new FormData(form);
-        let estimateContent = '';
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
+    <script>
+        function generateEstimate() {
+            const form = document.getElementById('estimateForm');
+            const formData = new FormData(form);
+            let estimateContent = '';
 
-        for (const [key, value] of formData.entries()) {
-            estimateContent += `${key}: ${value}\n`;
+            for (const [key, value] of formData.entries()) {
+                estimateContent += `${key}: ${value}\n`;
+            }
+
+            // Generate PDF
+            const pdf = new jsPDF();
+            pdf.text(10, 10, estimateContent);
+
+            try {
+                // Try to save the PDF
+                pdf.save('roofing_estimate.pdf');
+
+                // Open a new window to display the container content
+                const newWindow = window.open('', '_blank');
+                newWindow.document.write('<html><head><title>Roofing Estimate</title></head><body>');
+                newWindow.document.write('<div class="container">');
+                newWindow.document.write(document.querySelector('.container').innerHTML);
+                newWindow.document.write('</div></body></html>');
+
+                // Auto print after opening the new window
+                newWindow.print();
+
+                // Close the new window after printing
+                newWindow.onafterprint = function() {
+                    newWindow.close();
+                };
+            } catch (error) {
+                // Handle any errors that occur during PDF generation
+                console.error('Error generating PDF:', error);
+            }
+
+            return false; // Prevent form submission
         }
-
-        // Generate PDF
-        const pdf = new jsPDF();
-        pdf.text(10, 10, estimateContent);
-
-        try {
-            // Try to save the PDF
-            pdf.save('roofing_estimate.pdf');
-
-            // Auto print after saving the PDF
-            window.print();
-
-            // Submit the form after printing
-            form.submit();
-        } catch (error) {
-            // Handle any errors that occur during PDF generation
-            console.error('Error generating PDF:', error);
-            // Still submit the form even if PDF generation fails
-            form.submit();
-        }
-
-        return false; // Prevent form submission
-    }
-</script>
+    </script>
 
 
 </body>
