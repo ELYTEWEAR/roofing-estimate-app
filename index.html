@@ -348,41 +348,54 @@
             }
     
             // Initialize coordinates and settings
-            let y = 20; // Starting Y with more space
+            let y = 10; // Starting Y
             const xLeft = 15; // Left column X position
             const xRight = 110; // Right column X position
     
+            // Draw thicker red border closer to the edge of the page
+            doc.setLineWidth(1); // Making the line thicker
+            doc.setDrawColor(255, 0, 0); // Red color
+            doc.rect(10, 10, 190, 277); // Adjusted rectangle closer to the edge with a margin of 10mm
+    
             // Company Info and Title at the top
-            doc.setFontSize(12);
+            doc.setFontSize(10);
             doc.text("Owen's Construction - Insurance Specialists", 105, y, { align: 'center' });
-            y += 6; // Adjusted spacing
-            doc.setFontSize(16);
+            y += 5; // Adjusted spacing
+            doc.text("Phone: (330) 507-5195", 105, y, { align: 'center' });
+            y += 5;
+            doc.text("Fax: (330) 792-7432", 105, y, { align: 'center' });
+            y += 5;
+            doc.text("Email: mykal372002@yahoo.com", 105, y, { align: 'center' });
+            y += 5;
+            doc.text("Website: www.owensroofs.com", 105, y, { align: 'center' });
+            y += 5;
+            doc.text("Location: Canfield, Ohio", 105, y, { align: 'center' });
+            y += 5;
+            doc.setFontSize(18);
             doc.text("Roofing Estimate", 105, y, { align: 'center' });
             y += 10; // Space before starting content
     
             // Main content excluding signature and date fields
             const excludedFields = ['Signature 1', 'Date 1', 'Signature 2', 'Date 2'];
             const entries = Array.from(formData.entries()).filter(entry => !excludedFields.includes(entry[0]));
-            let column = 'left';
-    
-            entries.forEach(([key, value]) => {
-                if (column === 'left') {
-                    doc.setFontSize(10);
-                    doc.text(`${formatFieldName(key)}: ${value}`, xLeft, y);
-                    column = 'right';
-                } else {
-                    doc.text(`${formatFieldName(key)}: ${value}`, xRight, y);
-                    y += 7; // Move down after right column entry
-                    column = 'left'; // Switch back to left column
-                }
+            entries.forEach(([key, value], index) => {
+                const x = index % 2 === 0 ? xLeft : xRight;
+                const formattedKey = formatFieldName(key);
+                doc.setFontSize(10);
+                doc.text(`${formattedKey}: ${value}`, x, y);
+                if (x === xRight) y += 7; // Increment Y after writing in the right column
             });
     
-            // Terms and Conditions with adjusted positioning and smaller font
+            // Terms and Conditions
             y += 10; // Additional space before Terms and Conditions
             doc.setFontSize(9);
             doc.text("Terms and Conditions", 105, y, { align: 'center' });
-            y += 5;
-            let termsText = "Your specific terms and conditions text here, ensuring it's concise to fit the allocated space appropriately.";
+            y += 5; // Space after title
+            let termsText = `All material is guaranteed to be as specified, and the above work to be performed in accordance with the drawings and specifications submitted for above work and completed in a substantial workmanlike manner for the sum of ${formData.get('agreedSum')}. Any alteration or deviation from above specifications involving extra costs will be executed only upon written orders, and will become an extra charge over and above the estimate. Owens Construction is not responsible for ice damage occurred on the roof. All agreements contingent upon strikes, accidents, or delays beyond our control. 50% money up front and 50% money on completion.
+    
+    Acceptance of Proposal: Owens Construction and ${formData.get('clientName')} agree to the work with the money given from the insurance company, at no cost above or below the written amount including the depreciation. Any unforeseen expenses will be taken up with the insurance company and adjuster as a supplement.
+    
+    IN ACCORDANCE AND PURSUANT TO THE TERMS AND CONDITIONS OF OHIO REVISED CODE SECTION 1345.23 "HOME SOLICITATION ACT" THE HOMEOWNER SHALL HAVE THREE (3) BUSINESS DAYS TO CANCEL THE FOREGOING PROPOSAL/CONTRACT BY MIDNIGHT OF THE THIRD DAY.`;
             doc.splitTextToSize(termsText, 180).forEach(line => {
                 doc.text(line, 15, y);
                 y += 4; // Tighter line spacing for terms
