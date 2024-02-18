@@ -312,11 +312,11 @@
             const form = document.getElementById('estimateForm');
             const formData = new FormData(form);
             let estimateContent = '';
-
+        
             for (const [key, value] of formData.entries()) {
                 estimateContent += `${key}: ${value}<br>`;
             }
-
+        
             // Open a new window to display the estimate
             const newWindow = window.open('', '_blank');
             newWindow.document.write('<html><head><title>Roofing Estimate</title></head><body>');
@@ -324,15 +324,14 @@
             newWindow.document.write('<h1>Owens Construction Roofing Estimate</h1>');
             newWindow.document.write(`<p>${estimateContent}</p>`);
             newWindow.document.write('</div></body></html>');
-
-            // Auto print after opening the new window
-            newWindow.print();
-
-            // Close the new window after printing
-            newWindow.onafterprint = function() {
-                newWindow.close();
-            };
+        
+            // Wait for a short delay for content to be fully rendered, then print
+            setTimeout(() => {
+                newWindow.print();
+                newWindow.close(); // Close the new window after printing
+            }, 1000); // Adjust delay as needed
         }
+
     </script>
 </body>
 </html>
