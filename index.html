@@ -52,12 +52,19 @@
                     </select>
                 </div>
 
-                <div class="form-row">
+               <div class="form-row">
                     <label for="squares">Number of Squares: </label>
                     <input type="number" id="squares" name="squares">
-                    <input type="checkbox" id="costPerSquare" name="costPerSquare">
-                    <label for="costPerSquare">$500 per square</label>
+                
+                    <div class="pricing-options">
+                        <input type="radio" id="costPerSquare350" name="costPerSquare" value="350">
+                        <label for="costPerSquare350">$350 per square</label>
+                
+                        <input type="radio" id="costPerSquare500" name="costPerSquare" value="500" checked>
+                        <label for="costPerSquare500">$500 per square</label>
+                    </div>
                 </div>
+
 
                 <div class="form-row">
                     <input type="checkbox" id="tearOff" name="tearOff" checked>
