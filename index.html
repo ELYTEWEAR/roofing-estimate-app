@@ -320,7 +320,31 @@
     
             // Open a new window to display the estimate
             const newWindow = window.open('', '_blank');
-            newWindow.document.write('<html><head><title>Roofing Estimate</title></head><body>');
+            newWindow.document.write('<html><head><title>Roofing Estimate</title>');
+            newWindow.document.write('<style>');
+            newWindow.document.write(`
+                body {
+                    font-family: Arial, sans-serif;
+                    padding: 20px;
+                }
+                h1 {
+                    text-align: center;
+                    margin-bottom: 20px;
+                }
+                .container {
+                    max-width: 800px;
+                    margin: 0 auto;
+                    background-color: #fff;
+                    padding: 20px;
+                    border-radius: 8px;
+                    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                }
+                p {
+                    margin-bottom: 10px;
+                }
+                /* Add more styles as needed */
+            `);
+            newWindow.document.write('</style></head><body>');
             newWindow.document.write('<div class="container">');
             newWindow.document.write('<h1>Owens Construction Roofing Estimate</h1>');
             newWindow.document.write(`<p>${estimateContent}</p>`);
@@ -336,6 +360,7 @@
         // Attach the event listener to the form's submit event
         document.getElementById('estimateForm').addEventListener('submit', generateEstimate);
     </script>
+
 
 </body>
 </html>
