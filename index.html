@@ -301,7 +301,19 @@
         });
 
         function generatePrintablePage(formData) {
-            let printableContent = '<h1>Owens Construction Roofing Estimate</h1>';
+            let printableContent = '<h1>Estimate Sheet Roofing</h1>';
+            printableContent += '<h2>Owen\'s Construction</h2>';
+            printableContent += '<p>Insurance Specialists<br>';
+            printableContent += 'Phone: (330) 507-5195<br>';
+            printableContent += 'Fax: (330) 792-7432<br>';
+            printableContent += 'Email: <a href="mailto:mykal372002@yahoo.com">mykal372002@yahoo.com</a><br>';
+            printableContent += 'Website: <a href="https://www.owensroofs.com" target="_blank">www.owensroofs.com</a><br>';
+            printableContent += 'Location: Austintown, Ohio<br>';
+            printableContent += 'Fully Insured & Bonded<br>';
+            printableContent += 'Professional Workmanship<br>';
+            printableContent += '1 Year Labor Guarantee</p>';
+            
+            printableContent += '<h1>Roofing Estimate</h1>';
             printableContent += '<h2>Customer Information</h2>';
             printableContent += '<p>Name: ' + formData.get('customerName') + '</p>';
             printableContent += '<p>Address: ' + formData.get('customerAddress') + '</p>';
@@ -351,6 +363,7 @@
         }
     });
 </script>
+
 
 
 
