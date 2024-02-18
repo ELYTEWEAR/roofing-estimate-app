@@ -348,7 +348,7 @@
             let y = 10; // Starting Y
             let x = 20; // Starting X for the first column
             const columnWidth = 80; // Width of each column
-            let secondColumnStartY = 40; // Default starting Y for the second column
+            let secondColumnStartY = 70; // Adjusted starting Y for the second column to not be too high
     
             // Draw red border around the page
             doc.setDrawColor(255, 0, 0); // Red color
@@ -376,24 +376,22 @@
             doc.text("Owens Construction Roofing Estimate", 105, y, { align: 'center' });
     
             // Reset Y for estimate content
-            y += 10; // Space after title before starting content
+            y += 20; // Space after title before starting content
     
             // Estimate Content in two columns
             doc.setFontSize(12);
             const entries = Array.from(formData.entries());
             entries.forEach(([key, value], index) => {
-                if (key === "Boots") { // Check for "Boots" entry to start second column
+                if (index === Math.ceil(entries.length / 2)) { // Move to second column halfway through
                     x += columnWidth + 10; // 10mm gap between columns
-                    y = secondColumnStartY; // Align top of the second column
+                    y = secondColumnStartY; // Adjusted top of the second column
                 }
                 doc.text(`${key}: ${value}`, x, y);
                 y += 7; // Line spacing
             });
     
-            // Adjust Y for Terms and Conditions to ensure visibility
-            let termsY = Math.max(y, secondColumnStartY + 100); // Use the larger of the two Y values
-    
-            // Terms and Conditions across the full width
+            // Terms and Conditions closer to the bottom but within the page
+            let termsY = 210; // Adjusted Y position for terms and conditions to ensure visibility
             doc.setFontSize(10);
             doc.text("Terms and Conditions", 105, termsY, { align: 'center' });
             termsY += 5; // Space after title
@@ -416,7 +414,6 @@
         // Attach the event listener to the form's submit event
         document.getElementById('estimateForm').addEventListener('submit', generateEstimate);
     </script>
-
 
 
 
