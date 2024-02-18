@@ -6,22 +6,44 @@
     <title>Roofing Estimate</title>
     <link rel="stylesheet" href="style.css"> <!-- Link to your CSS file -->
     <style>
-        /* Your existing styles */
-        @media print {
-            body * {
-                visibility: hidden;
-            }
-            #printContainer, #printContainer * {
-                visibility: visible;
-            }
-            #printContainer {
-                position: absolute;
-                left: 0;
-                top: 0;
-                width: 100%;
-            }
-        }
-    </style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f0f0f0;
+    }
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 20px;
+        position: relative; /* Added position relative */
+    }
+    h1 {
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    h2 {
+        margin-bottom: 10px;
+    }
+    p {
+        margin-bottom: 10px;
+    }
+    .footer {
+        background-color: red;
+        color: white;
+        padding: 10px;
+        text-align: center;
+        position: absolute; /* Changed position to absolute */
+        bottom: 0;
+        left: 0; /* Added left position */
+        width: 100%;
+        border-bottom-left-radius: 8px; /* Added to match the container's border-radius */
+        border-bottom-right-radius: 8px; /* Added to match the container's border-radius */
+    }
+</style>
+
 </head>
 <body>
     <div class="container">
