@@ -346,6 +346,15 @@
                 p {
                     margin-bottom: 10px;
                 }
+                .footer {
+                    background-color: red;
+                    color: white;
+                    padding: 10px;
+                    text-align: center;
+                    position: fixed;
+                    bottom: 0;
+                    width: 100%;
+                }
                 @page {
                     size: A4;
                     margin: 20mm; /* Adjust margins as needed */
@@ -354,6 +363,9 @@
                     .container {
                         page-break-inside: avoid;
                     }
+                    .footer {
+                        display: none;
+                    }
                 }
             `);
             newWindow.document.write('</style></head><body>');
@@ -361,14 +373,14 @@
             newWindow.document.write('<h1>Owens Construction Roofing Estimate</h1>');
             newWindow.document.write(`<p>${estimateContent}</p>`);
             newWindow.document.write('</div>');
-            newWindow.document.write('<div class="footer" style="background-color: red; color: white; padding: 10px; text-align: center;">');
+            newWindow.document.write('<div class="footer">');
             newWindow.document.write('<h2>Owen\'s Construction</h2>');
             newWindow.document.write('<p>Insurance Specialists<br>');
             newWindow.document.write('Phone: (330) 507-5195<br>');
             newWindow.document.write('Fax: (330) 792-7432<br>');
             newWindow.document.write('Email: <a href="mailto:mykal372002@yahoo.com">mykal372002@yahoo.com</a><br>');
             newWindow.document.write('Website: <a href="https://www.owensroofs.com" target="_blank">www.owensroofs.com</a><br>');
-            newWindow.document.write('Location: Austintown, Ohio<br>');
+            newWindow.document.write('Location: Canfield, Ohio<br>');
             newWindow.document.write('Fully Insured & Bonded<br>');
             newWindow.document.write('Professional Workmanship<br>');
             newWindow.document.write('1 Year Labor Guarantee</p>');
@@ -384,6 +396,7 @@
         // Attach the event listener to the form's submit event
         document.getElementById('estimateForm').addEventListener('submit', generateEstimate);
     </script>
+
 
 
 </body>
