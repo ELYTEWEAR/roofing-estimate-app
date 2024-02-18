@@ -360,6 +360,8 @@
             newWindow.document.write('<div class="container">');
             newWindow.document.write('<h1>Owens Construction Roofing Estimate</h1>');
             newWindow.document.write(`<p>${estimateContent}</p>`);
+            newWindow.document.write('</div>');
+            newWindow.document.write('<div class="footer" style="background-color: red; color: white; padding: 10px; text-align: center;">');
             newWindow.document.write('<h2>Owen\'s Construction</h2>');
             newWindow.document.write('<p>Insurance Specialists<br>');
             newWindow.document.write('Phone: (330) 507-5195<br>');
@@ -382,13 +384,6 @@
         // Attach the event listener to the form's submit event
         document.getElementById('estimateForm').addEventListener('submit', generateEstimate);
     </script>
-
-
-
-
-
-
-
 
 </body>
 </html>
