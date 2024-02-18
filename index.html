@@ -319,7 +319,7 @@
             printableContent += 'Fully Insured & Bonded<br>';
             printableContent += 'Professional Workmanship<br>';
             printableContent += '1 Year Labor Guarantee</p>';
-
+        
             printableContent += '<h2>Customer Information</h2>';
             printableContent += '<p><strong>Customer Name:</strong> ' + formData.get('customerName') + '</p>';
             printableContent += '<p><strong>Customer Address:</strong> ' + formData.get('customerAddress') + '</p>';
@@ -332,26 +332,29 @@
             printableContent += '<p><strong>Shingle Color:</strong></p>';
             printableContent += '<p>' + formData.get('shingleColor') + '</p>';
             printableContent += '<p><strong>Number of Squares:</strong></p>';
-            printableContent += '<p>' + formData.get('squares') + '</p>';
-            // Include all other form fields similarly
-
+            const squares = parseInt(formData.get('squares'));
+            const costPerSquare = parseInt(formData.get('costPerSquare'));
+            const totalCost = squares * costPerSquare;
+            printableContent += '<p>' + squares + '</p>';
+        
             printableContent += '<h2>Total for Cost and Labor</h2>';
-            printableContent += '<p><strong>Total for Cost and Labor:</strong> $' + formData.get('totalCost') + '</p>';
+            printableContent += '<p><strong>Total for Cost and Labor:</strong> $' + totalCost + '</p>';
             printableContent += '<p><strong>Miscellaneous:</strong> ' + formData.get('misc') + '</p>';
-
+        
             printableContent += '<h2>Terms and Conditions</h2>';
             printableContent += '<p>All material is guaranteed to be as specified, and the above work to be performed in accordance with the drawings and specifications submitted for above work and completed in a substantial workmanlike manner for the sum of $' + formData.get('agreedSum') + '. Any alteration or deviation from above specifications involving extra costs will be executed only upon written orders, and will become an extra charge over and above the estimate. Owens Construction is not responsible for ice damage occurred on the roof. All agreements contingent upon strikes, accidents, or delays beyond our control. 50% money up front and 50% money on completion.</p>';
             printableContent += '<p>Acceptance of Proposal: Owens Construction and ' + formData.get('clientName') + ' agree to the work with the money given from the insurance company, at no cost above or below the written amount including the depreciation. Any unforeseen expenses will be taken up with the insurance company and adjuster as a supplement.</p>';
             printableContent += '<p>IN ACCORDANCE AND PURSUANT TO THE TERMS AND CONDITIONS OF OHIO REVISED CODE SECTION 1345.23 "HOME SOLICITATION ACT" THE HOMEOWNER SHALL HAVE THREE (3) BUSINESS DAYS TO CANCEL THE FOREGOING PROPOSAL/CONTRACT BY MIDNIGHT OF THE THIRD DAY.</p>';
-
+        
             printableContent += '<h2>Signatures</h2>';
             printableContent += '<p><strong>Signature:</strong> ' + formData.get('signature1') + '</p>';
             printableContent += '<p><strong>Date:</strong> ' + formData.get('date1') + '</p>';
             printableContent += '<p><strong>Signature:</strong> ' + formData.get('signature2') + '</p>';
             printableContent += '<p><strong>Date:</strong> ' + formData.get('date2') + '</p>';
-
+        
             return printableContent;
         }
+
 
         // Function to format the shingles type for proper display
         function formatShinglesType(shinglesType) {
