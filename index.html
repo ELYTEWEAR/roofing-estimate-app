@@ -326,7 +326,7 @@
             
             printableContent += '<h2>Outside Work</h2>';
             printableContent += '<p><strong>I will supply Labor and Material on a</strong></p>';
-            printableContent += '<p>' + formData.get('roofPitch') + ' pitch roof.</p>';
+            printableContent += '<p>' + formatRoofPitch(formData.get('roofPitch')) + ' pitch roof.</p>';
             printableContent += '<p><strong>We will use</strong></p>';
             printableContent += '<p>' + formatShinglesType(formData.get('shinglesType')) + ' shingles.</p>';
             printableContent += '<p><strong>Shingle Color:</strong></p>';
@@ -334,10 +334,10 @@
             printableContent += '<p><strong>Number of Squares:</strong></p>';
             const squares = parseInt(formData.get('squares'));
             const costPerSquare = parseInt(formData.get('costPerSquare'));
-            const totalCost = squares * costPerSquare;
+            const totalCost = isNaN(squares) ? 0 : squares * costPerSquare;
             printableContent += '<p>' + (isNaN(squares) ? '0' : squares) + '</p>'; // Ensure showing 0 if NaN
             printableContent += '<h2>Total for Cost and Labor</h2>';
-            printableContent += '<p><strong>Total for Cost and Labor:</strong> $' + (isNaN(totalCost) ? '0' : totalCost) + '</p>'; // Ensure showing 0 if NaN
+            printableContent += '<p><strong>Total for Cost and Labor:</strong> $' + totalCost + '</p>';
             printableContent += '<p><strong>Miscellaneous:</strong> ' + formData.get('misc') + '</p>';
         
             printableContent += '<h2>Terms and Conditions</h2>';
@@ -364,6 +364,15 @@
             }
         }
 
+        // Function to format the roof pitch for proper display
+        function formatRoofPitch(roofPitch) {
+            if (roofPitch === 'flat') {
+                return 'Flat';
+            } else {
+                return roofPitch.replace('/', ' in 12/');
+            }
+        }
+
         function printPage(content) {
             const printWindow = window.open('', '_blank');
             printWindow.document.open();
@@ -379,6 +388,7 @@
         }
     });
 </script>
+
 
 </body>
 </html>
