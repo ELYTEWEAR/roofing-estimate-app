@@ -332,57 +332,73 @@
         function generateEstimate(event) {
             event.preventDefault(); // Prevent the default form submission
     
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF({
+                orientation: 'portrait',
+                unit: 'mm',
+                format: 'a4'
+            });
+    
             const form = document.getElementById('estimateForm');
             const formData = new FormData(form);
             const clientName = formData.get('clientName');
             const agreedSum = formData.get('agreedSum');
-            let estimateContent = '<div class="container" style="padding: 20px; border: 2px solid red; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); margin-top: 20px; max-width: 800px; margin: 0 auto; page-break-inside: avoid;">';
-            estimateContent += '<div style="position: absolute; top: 20px; right: 20px;">';
-            estimateContent += '<h2>Owen\'s Construction</h2>';
-            estimateContent += '<p>Insurance Specialists<br>';
-            estimateContent += 'Phone: (330) 507-5195<br>';
-            estimateContent += 'Fax: (330) 792-7432<br>';
-            estimateContent += 'Email: <a href="mailto:mykal372002@yahoo.com">mykal372002@yahoo.com</a><br>';
-            estimateContent += 'Website: <a href="https://www.owensroofs.com" target="_blank">www.owensroofs.com</a><br>';
-            estimateContent += 'Location: Austintown, Ohio<br>';
-            estimateContent += 'Fully Insured & Bonded<br>';
-            estimateContent += 'Professional Workmanship<br>';
-            estimateContent += '1 Year Labor Guarantee</p>';
-            estimateContent += '</div>'; // Close company info
-            estimateContent += '<h1 style="text-align: center; margin-bottom: 20px;">Owens Construction Roofing Estimate</h1>';
-            estimateContent += '<div class="estimate-content">';
     
+            // Initialize Y coordinate
+            let y = 10;
+    
+            // Company Info
+            doc.setFontSize(10);
+            doc.text("Owen's Construction - Insurance Specialists", 105, y, { align: 'center' });
+            y += 5;
+            doc.text("Phone: (330) 507-5195", 105, y, { align: 'center' });
+            y += 5;
+            doc.text("Fax: (330) 792-7432", 105, y, { align: 'center' });
+            y += 5;
+            doc.text("Email: mykal372002@yahoo.com", 105, y, { align: 'center' });
+            y += 5;
+            doc.text("Website: www.owensroofs.com", 105, y, { align: 'center' });
+            y += 5;
+            doc.text("Location: Austintown, Ohio", 105, y, { align: 'center' });
+            y += 5;
+            doc.text("Fully Insured & Bonded - Professional Workmanship - 1 Year Labor Guarantee", 105, y, { align: 'center' });
+    
+            // Estimate Title
+            y += 10;
+            doc.setFontSize(18);
+            doc.text("Owens Construction Roofing Estimate", 105, y, { align: 'center' });
+    
+            // Estimate Content
+            y += 10;
+            doc.setFontSize(12);
             for (const [key, value] of formData.entries()) {
-                estimateContent += `<p><strong>${key}:</strong> ${value}</p>`;
+                doc.text(`${key}: ${value}`, 20, y);
+                y += 7;
             }
-            
-            // Terms and conditions section
-            estimateContent += '<section class="terms-and-conditions" style="margin-top: 40px; page-break-inside: avoid;">';
-            estimateContent += '<h3 style="margin-bottom: 10px;">Terms and Conditions</h3>';
-            estimateContent += `<p>All material is guaranteed to be as specified, and the above work to be performed in accordance with the drawings and specifications submitted for above work and completed in a substantial workmanlike manner for the sum of ${agreedSum}. Any alteration or deviation from above specifications involving extra costs will be executed only upon written orders, and will become an extra charge over and above the estimate. Owens Construction is not responsible for ice damage occurred on the roof. All agreements contingent upon strikes, accidents, or delays beyond our control. 50% money up front and 50% money on completion.</p>`;
-            estimateContent += `<p>Acceptance of Proposal: Owens Construction and ${clientName} agree to the work with the money given from the insurance company, at no cost above or below the written amount including the depreciation. Any unforeseen expenses will be taken up with the insurance company and adjuster as a supplement.</p>`;
-            estimateContent += '<p>IN ACCORDANCE AND PURSUANT TO THE TERMS AND CONDITIONS OF OHIO REVISED CODE SECTION 1345.23 "HOME SOLICITATION ACT" THE HOMEOWNER SHALL HAVE THREE (3) BUSINESS DAYS TO CANCEL THE FOREGOING PROPOSAL/CONTRACT BY MIDNIGHT OF THE THIRD DAY.</p>';
-            estimateContent += '</section>'; // Close terms-and-conditions section
-            
-            estimateContent += '</div>'; // Close estimate-content
-            estimateContent += '</div>'; // Close container
     
-            // Open a new window to display the estimate
-            const newWindow = window.open('', '_blank');
-            newWindow.document.write('<html><head><title>Roofing Estimate</title><style>@media print { body { zoom: 0.75; } }</style></head><body>');
-            newWindow.document.write(estimateContent);
-            newWindow.document.write('</body></html>');
+            // Terms and Conditions
+            y += 10;
+            doc.setFontSize(10);
+            doc.text("Terms and Conditions", 105, y, { align: 'center' });
+            y += 5;
+            let termsText = `All material is guaranteed to be as specified, and the above work to be performed in accordance with the drawings and specifications submitted for above work and completed in a substantial workmanlike manner for the sum of ${agreedSum}. Any alteration or deviation from above specifications involving extra costs will be executed only upon written orders, and will become an extra charge over and above the estimate. Owens Construction is not responsible for ice damage occurred on the roof. All agreements contingent upon strikes, accidents, or delays beyond our control. 50% money up front and 50% money on completion.
     
-            // Wait for a short delay for content to be fully rendered, then print
-            setTimeout(() => {
-                newWindow.print();
-                newWindow.close(); // Close the new window after printing
-            }, 1000); // Adjust delay as needed
+    Acceptance of Proposal: Owens Construction and ${clientName} agree to the work with the money given from the insurance company, at no cost above or below the written amount including the depreciation. Any unforeseen expenses will be taken up with the insurance company and adjuster as a supplement.
+    
+    IN ACCORDANCE AND PURSUANT TO THE TERMS AND CONDITIONS OF OHIO REVISED CODE SECTION 1345.23 "HOME SOLICITATION ACT" THE HOMEOWNER SHALL HAVE THREE (3) BUSINESS DAYS TO CANCEL THE FOREGOING PROPOSAL/CONTRACT BY MIDNIGHT OF THE THIRD DAY.`;
+            doc.splitTextToSize(termsText, 170).forEach((line) => {
+                doc.text(line, 20, y);
+                y += 5;
+            });
+    
+            // Save the PDF
+            doc.save('RoofingEstimate.pdf');
         }
     
         // Attach the event listener to the form's submit event
         document.getElementById('estimateForm').addEventListener('submit', generateEstimate);
     </script>
+
 
 
 
