@@ -301,13 +301,13 @@
         });
 
         function generatePrintablePage(formData) {
-            let printableContent = '<h1>Roofing Estimate</h1>';
+            let printableContent = '<h1>Owens Construction Roofing Estimate</h1>';
             printableContent += '<h2>Customer Information</h2>';
             printableContent += '<p>Name: ' + formData.get('customerName') + '</p>';
             printableContent += '<p>Address: ' + formData.get('customerAddress') + '</p>';
             printableContent += '<h2>Outside Work</h2>';
             printableContent += '<p>Roof Pitch: ' + formData.get('roofPitch') + '</p>';
-            printableContent += '<p>Shingles Type: ' + formData.get('shinglesType') + '</p>';
+            printableContent += '<p>Shingles Type: ' + formatShinglesType(formData.get('shinglesType')) + '</p>';
             printableContent += '<p>Shingle Color: ' + formData.get('shingleColor') + '</p>';
             printableContent += '<p>Number of Squares: ' + formData.get('squares') + '</p>';
             // Include all other form fields similarly
@@ -315,9 +315,9 @@
             printableContent += '<p>Total Cost: $' + formData.get('totalCost') + '</p>';
             printableContent += '<p>Miscellaneous: ' + formData.get('misc') + '</p>';
             printableContent += '<h2>Terms and Conditions</h2>';
-            printableContent += '<p>Agreed Sum: $' + formData.get('agreedSum') + '</p>';
-            printableContent += '<p>Client Name: ' + formData.get('clientName') + '</p>';
-            // Include all other terms and conditions fields similarly
+            printableContent += '<p>All material is guaranteed to be as specified, and the above work to be performed in accordance with the drawings and specifications submitted for above work and completed in a substantial workmanlike manner for the sum of $' + formData.get('agreedSum') + '. Any alteration or deviation from above specifications involving extra costs will be executed only upon written orders, and will become an extra charge over and above the estimate. Owens Construction is not responsible for ice damage occurred on the roof. All agreements contingent upon strikes, accidents, or delays beyond our control. 50% money up front and 50% money on completion.</p>';
+            printableContent += '<p>Acceptance of Proposal: Owens Construction and ' + formData.get('clientName') + ' agree to the work with the money given from the insurance company, at no cost above or below the written amount including the depreciation. Any unforeseen expenses will be taken up with the insurance company and adjuster as a supplement.</p>';
+            printableContent += '<p>IN ACCORDANCE AND PURSUANT TO THE TERMS AND CONDITIONS OF OHIO REVISED CODE SECTION 1345.23 "HOME SOLICITATION ACT" THE HOMEOWNER SHALL HAVE THREE (3) BUSINESS DAYS TO CANCEL THE FOREGOING PROPOSAL/CONTRACT BY MIDNIGHT OF THE THIRD DAY.</p>';
             printableContent += '<h2>Signatures</h2>';
             printableContent += '<p>Signature 1: ' + formData.get('signature1') + '</p>';
             printableContent += '<p>Date 1: ' + formData.get('date1') + '</p>';
@@ -327,6 +327,14 @@
             return printableContent;
         }
 
+        // Function to format the shingles type for proper display
+        function formatShinglesType(shinglesType) {
+            if (shinglesType === 'pinicleatlas') {
+                return 'Pinicle Atlas'; // Add space
+            } else {
+                return shinglesType; // Return unchanged for other options
+            }
+        }
 
         function printPage(content) {
             const printWindow = window.open('', '_blank');
@@ -343,6 +351,7 @@
         }
     });
 </script>
+
 
 
 
