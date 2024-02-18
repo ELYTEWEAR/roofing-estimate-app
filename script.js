@@ -1,40 +1,30 @@
 document.addEventListener('DOMContentLoaded', function() {
     const form = document.getElementById('estimateForm');
     const imagePreviewContainer = document.getElementById('imagePreviewContainer'); // Ensure this element exists in your HTML
-    const generateButton = form.querySelector('button[type="submit"]');
 
     form.addEventListener('submit', function(event) {
         event.preventDefault();
-        if (validateForm()) {
-            html2canvas(form, {
-                scale: window.devicePixelRatio, // Capture at device resolution
-                backgroundColor: null, // Transparent background to capture form as is
-                onclone: (document) => {
-                    // Modify cloned document if necessary before capturing
-                }
-            }).then(canvas => {
-                const imageData = canvas.toDataURL('image/png');
-                displayImage(imageData);
-                downloadImage(imageData, 'roofing-estimate.png');
-                showFeedback('Estimate generated successfully.', 'success');
-            }).catch(error => {
-                console.error('Error generating estimate:', error);
-                showFeedback('An error occurred while generating the estimate. Please try again.', 'error');
-            });
-        }
+        html2canvas(form, {
+            scale: window.devicePixelRatio, // Capture at device resolution
+            backgroundColor: null, // Transparent background to capture form as is
+            width: 850, // Set width to 8.5 inches (8.5 * 100 for millimeters)
+            height: 1100, // Set height to 11 inches (11 * 100 for millimeters)
+            onclone: (document) => {
+                // Modify cloned document if necessary before capturing
+            }
+        }).then(canvas => {
+            const imageData = canvas.toDataURL('image/jpeg'); // Changed format to JPEG
+            displayImage(imageData);
+            downloadImage(imageData, 'roofing-estimate.jpg'); // Changed file extension to .jpg
+        });
     });
-
-    function validateForm() {
-        // Perform form validation here
-        // Return true if validation passes, false otherwise
-        return true; // Placeholder, replace with actual validation logic
-    }
 
     function displayImage(dataUrl) {
         imagePreviewContainer.innerHTML = ''; // Clear previous images
         const img = new Image();
         img.src = dataUrl;
-        img.alt = 'Roofing Estimate Preview'; // Add alt text for accessibility
+        img.style.width = '100%'; // Ensure the image fits within the container
+        img.style.height = '100%';
         imagePreviewContainer.appendChild(img); // Display new image
     }
 
@@ -45,15 +35,5 @@ document.addEventListener('DOMContentLoaded', function() {
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);
-    }
-
-    function showFeedback(message, type) {
-        const feedbackDiv = document.createElement('div');
-        feedbackDiv.textContent = message;
-        feedbackDiv.classList.add('feedback', `feedback-${type}`);
-        document.body.appendChild(feedbackDiv);
-        setTimeout(() => {
-            document.body.removeChild(feedbackDiv);
-        }, 5000);
     }
 });
