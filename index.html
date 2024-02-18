@@ -307,27 +307,45 @@
     </div>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
-    <script>
-        function generateEstimate() {
-            const form = document.getElementById('estimateForm');
-            const formData = new FormData(form);
-            let estimateContent = '';
-    
-            for (const [key, value] of formData.entries()) {
-                estimateContent += `${key}: ${value}\n`;
-            }
-    
-            // Generate PDF
-            const pdf = new jsPDF();
-            pdf.text(10, 10, estimateContent);
+<script>
+    function generateEstimate() {
+        const form = document.getElementById('estimateForm');
+        const formData = new FormData(form);
+        let estimateContent = '';
+
+        for (const [key, value] of formData.entries()) {
+            estimateContent += `${key}: ${value}\n`;
+        }
+
+        // Generate PDF
+        const pdf = new jsPDF();
+        pdf.text(10, 10, estimateContent);
+
+        try {
+            // Try to save the PDF
             pdf.save('roofing_estimate.pdf');
-    
-            // Auto print
-            window.print();
-            
-            // Submit the form
+
+            // Wait a short delay for the PDF to be saved
+            setTimeout(() => {
+                // Auto print after a short delay
+                window.print();
+                
+                // Listen for the print event to submit the form after printing
+                window.addEventListener('afterprint', () => {
+                    // Submit the form
+                    form.submit();
+                });
+            }, 1000); // Adjust delay as needed
+        } catch (error) {
+            // Handle any errors that occur during PDF generation
+            console.error('Error generating PDF:', error);
+            // Still submit the form even if PDF generation fails
             form.submit();
         }
-    </script>
+
+        return false; // Prevent form submission
+    }
+</script>
+
 </body>
 </html>
