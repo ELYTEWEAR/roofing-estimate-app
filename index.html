@@ -195,7 +195,7 @@
                 </div>
 
                 <div class="form-row">
-                    <label>Nails 1 1/4" (Boxes): </label>
+                    <label for="nails1_25Boxes">Nails 1 1/4" (Boxes): </label>
                     <select id="nails1_25Boxes" name="nails1_25Boxes">
                         <option value="0">0</option>
                         <option value="1">1</option>
@@ -206,7 +206,7 @@
                 </div>
 
                 <div class="form-row">
-                    <label>Nails 1 3/4" (Boxes): </label>
+                    <label for="nails1_75Boxes">Nails 1 3/4" (Boxes): </label>
                     <select id="nails1_75Boxes" name="nails1_75Boxes">
                         <option value="0">0</option>
                         <option value="1">1</option>
@@ -217,7 +217,7 @@
                 </div>
 
                 <div class="form-row">
-                    <label>Staples T-50's (Boxes): </label>
+                    <label for="staplesBoxes">Staples T-50's (Boxes): </label>
                     <select id="staplesBoxes" name="staplesBoxes">
                         <option value="0">0</option>
                         <option value="1">1</option>
@@ -228,7 +228,7 @@
                 </div>
 
                 <div class="form-row">
-                    <label>Plywood 7/16 OSB Sheets: </label>
+                    <label for="plywoodSheetsOSB">Plywood 7/16 OSB Sheets: </label>
                     <select id="plywoodSheetsOSB" name="plywoodSheetsOSB">
                         <option value="0">0</option>
                         <option value="1">1</option>
@@ -343,96 +343,113 @@
             printableContent += '<p><strong>Shingle Color:</strong></p>';
             printableContent += '<p>' + formData.get('shingleColor') + '</p>';
             printableContent += '<p><strong>Number of Squares:</strong></p>';
-            const squares = parseInt(formData.get('squares'));
-            const costPerSquare = parseInt(formData.get('costPerSquare'));
-            const totalCost = isNaN(squares) ? 0 : squares * costPerSquare;
-            printableContent += '<p>' + (isNaN(squares) ? '0' : squares) + '</p>'; // Ensure showing 0 if NaN
+            printableContent += '<p>' + formData.get('squares') + '</p>';
+            printableContent += '<p><strong>Cost Per Square:</strong></p>';
+            printableContent += '<p>$' + formatCostPerSquare(formData.get('costPerSquare')) + '</p>';
+            printableContent += '<p><strong>Tear Off:</strong></p>';
+            printableContent += '<p>' + formatCheckbox(formData.get('tearOff')) + '</p>';
+            printableContent += '<p><strong>New Drip Edge (Ln. Ft.):</strong></p>';
+            printableContent += '<p>' + formData.get('dripEdgeLength') + '</p>';
+            printableContent += '<p><strong>Felt Weight:</strong></p>';
+            printableContent += '<p>' + formData.get('feltWeight') + ' lb</p>';
+            printableContent += '<p><strong>Ice and Water Guard:</strong></p>';
+            printableContent += '<p>' + formatCheckbox(formData.get('iceWaterGuard')) + '</p>';
+            printableContent += '<p><strong>Re-flash Chimneys:</strong></p>';
+            printableContent += '<p>' + formData.get('chimneys') + '</p>';
+            printableContent += '<p><strong>Weather in the Roof:</strong></p>';
+            printableContent += '<p>' + formatCheckbox(formData.get('weatherIn')) + '</p>';
+            printableContent += '<p><strong>Replace Plywood Sheets:</strong></p>';
+            printableContent += '<p>' + formData.get('plywoodSheets') + '</p>';
+            printableContent += '<p><strong>Insulation Rating:</strong></p>';
+            printableContent += '<p>R-' + formData.get('insulationRating') + '</p>';
+            printableContent += '<p><strong>Install 6" inch Boots:</strong></p>';
+            printableContent += '<p>' + formData.get('bootsQuantity') + '</p>';
+            printableContent += '<p><strong>Add Ridge Vent (Ln. Ft.):</strong></p>';
+            printableContent += '<p>' + formData.get('ridgeVentLength') + '</p>';
+            printableContent += '<p><strong>Remove Box Vents:</strong></p>';
+            printableContent += '<p>' + formData.get('boxVentsRemove') + '</p>';
+            printableContent += '<p><strong>Add Ice and Water to Valleys:</strong></p>';
+            printableContent += '<p>' + formData.get('valleysRolls') + '</p>';
+            printableContent += '<p><strong>Nails 1 1/4" (Boxes):</strong></p>';
+            printableContent += '<p>' + formData.get('nails1_25Boxes') + '</p>';
+            printableContent += '<p><strong>Nails 1 3/4" (Boxes):</strong></p>';
+            printableContent += '<p>' + formData.get('nails1_75Boxes') + '</p>';
+            printableContent += '<p><strong>Staples T-50\'s (Boxes):</strong></p>';
+            printableContent += '<p>' + formData.get('staplesBoxes') + '</p>';
+            printableContent += '<p><strong>Plywood 7/16 OSB Sheets:</strong></p>';
+            printableContent += '<p>' + formData.get('plywoodSheetsOSB') + '</p>';
             printableContent += '</div>';
             printableContent += '</div>';
-
-            // Additional fields
+            
             printableContent += '<div class="section">';
-            printableContent += '<h2 class="title">Additional Materials</h2>';
+            printableContent += '<h2 class="title">Costs and Labor</h2>';
             printableContent += '<div class="content">';
-            printableContent += '<p><strong>Nails:</strong> ' + formData.get('nails') + '</p>';
-            printableContent += '<p><strong>Drip Edge:</strong> ' + formData.get('dripEdge') + '</p>';
-            printableContent += '<p><strong>Rolls:</strong> ' + formData.get('rolls') + '</p>';
+            printableContent += '<p><strong>Total for Cost and Labor:</strong></p>';
+            printableContent += '<p>$' + formData.get('totalCost') + '</p>';
+            printableContent += '<p><strong>Miscellaneous:</strong></p>';
+            printableContent += '<p>' + formData.get('misc') + '</p>';
             printableContent += '</div>';
             printableContent += '</div>';
-        
-            printableContent += '<div class="section">';
-            printableContent += '<h2 class="title">Total for Cost and Labor</h2>';
-            printableContent += '<div class="content">';
-            printableContent += '<p><strong>Total for Cost and Labor:</strong> $' + totalCost + '</p>';
-            printableContent += '<p><strong>Miscellaneous:</strong> ' + formData.get('misc') + '</p>';
-            printableContent += '</div>';
-            printableContent += '</div>';
-        
+            
             printableContent += '<div class="section">';
             printableContent += '<h2 class="title">Terms and Conditions</h2>';
             printableContent += '<div class="content">';
-            printableContent += '<p>All material is guaranteed to be as specified, and the above work to be performed in accordance with the drawings and specifications submitted for above work and completed in a substantial workmanlike manner for the sum of $' + formData.get('agreedSum') + '. Any alteration or deviation from above specifications involving extra costs will be executed only upon written orders, and will become an extra charge over and above the estimate. Owens Construction is not responsible for ice damage occurred on the roof. All agreements contingent upon strikes, accidents, or delays beyond our control. 50% money up front and 50% money on completion.</p>';
-            printableContent += '<p>Acceptance of Proposal: Owens Construction and ' + formData.get('clientName') + ' agree to the work with the money given from the insurance company, at no cost above or below the written amount including the depreciation. Any unforeseen expenses will be taken up with the insurance company and adjuster as a supplement.</p>';
+            printableContent += '<p>All material is guaranteed to be as specified, and the above work to be performed in accordance with the drawings and specifications submitted for above work and completed in a substantial workmanlike manner for the sum of $<input type="number" name="agreedSum">. Any alteration or deviation from above specifications involving extra costs will be executed only upon written orders, and will become an extra charge over and above the estimate. Owens Construction is not responsible for ice damage occurred on the roof. All agreements contingent upon strikes, accidents, or delays beyond our control. 50% money up front and 50% money on completion.</p>';
+            printableContent += '<p>Acceptance of Proposal: Owens Construction and <input type="text" name="clientName"> agree to the work with the money given from the insurance company, at no cost above or below the written amount including the depreciation. Any unforeseen expenses will be taken up with the insurance company and adjuster as a supplement.</p>';
             printableContent += '<p>IN ACCORDANCE AND PURSUANT TO THE TERMS AND CONDITIONS OF OHIO REVISED CODE SECTION 1345.23 "HOME SOLICITATION ACT" THE HOMEOWNER SHALL HAVE THREE (3) BUSINESS DAYS TO CANCEL THE FOREGOING PROPOSAL/CONTRACT BY MIDNIGHT OF THE THIRD DAY.</p>';
             printableContent += '</div>';
             printableContent += '</div>';
-        
+            
             printableContent += '<div class="section">';
             printableContent += '<h2 class="title">Signatures</h2>';
             printableContent += '<div class="content">';
-            printableContent += '<p><strong>Signature:</strong> ' + formData.get('signature1') + '</p>';
-            printableContent += '<p><strong>Date:</strong> ' + formData.get('date1') + '</p>';
-            printableContent += '<p><strong>Signature:</strong> ' + formData.get('signature2') + '</p>';
-            printableContent += '<p><strong>Date:</strong> ' + formData.get('date2') + '</p>';
+            printableContent += '<p><strong>Signature 1:</strong> ' + formData.get('signature1') + ' <strong>Date:</strong> ' + formData.get('date1') + '</p>';
+            printableContent += '<p><strong>Signature 2:</strong> ' + formData.get('signature2') + ' <strong>Date:</strong> ' + formData.get('date2') + '</p>';
             printableContent += '</div>';
             printableContent += '</div>';
-        
+            
             return printableContent;
         }
 
-
-        // Function to format the shingles type for proper display
-        function formatShinglesType(shinglesType) {
-            if (shinglesType === 'pinicleatlas') {
-                return 'Pinicle Atlas'; // Add space
+        function formatRoofPitch(pitch) {
+            if (pitch === 'flat') {
+                return 'Flat';
             } else {
-                return shinglesType; // Return unchanged for other options
+                return pitch + ' pitch';
             }
         }
 
-        // Function to format the roof pitch for proper display
-        function formatRoofPitch(roofPitch) {
-            if (roofPitch === 'flat') {
-                return 'Flat';
+        function formatShinglesType(type) {
+            if (type === 'pinicleAtlas') {
+                return 'Pinicle Atlas';
             } else {
-                return roofPitch.replace('/', ' in 12/');
+                return 'Other';
             }
+        }
+
+        function formatCostPerSquare(cost) {
+            return parseFloat(cost).toFixed(2);
+        }
+
+        function formatCheckbox(value) {
+            return value ? 'Yes' : 'No';
         }
 
         function printPage(content) {
-            const printWindow = window.open('', '_blank');
-            printWindow.document.open();
-            printWindow.document.write('<html><head><title>Printable Page</title>');
-            printWindow.document.write('<style>');
-            printWindow.document.write('body { font-family: Arial, sans-serif; color: red; }'); // Set text color to red
-            printWindow.document.write('.section { border-top: 1px solid #ccc; padding-top: 20px; }');
-            printWindow.document.write('.title { color: #007bff; font-size: 24px; margin-bottom: 10px; }');
-            printWindow.document.write('.content { margin-left: 20px; }');
-            printWindow.document.write('</style>');
-            printWindow.document.write('</head><body>');
-            printWindow.document.write(content);
-            printWindow.document.write('</body></html>');
-            printWindow.document.close();
+            const container = document.getElementById('imagePreviewContainer');
+            container.innerHTML = content;
 
-            // Wait for content to load before printing
-            setTimeout(function() {
-                printWindow.print();
-            }, 500); // Adjust timeout as needed
+            html2canvas(container).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const doc = new jsPDF('p', 'mm', 'a4');
+                const imgProps = doc.getImageProperties(imgData);
+                const pdfWidth = doc.internal.pageSize.getWidth();
+                const pdfHeight = imgProps.height * pdfWidth / imgProps.width;
+                doc.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
+                doc.save('estimate.pdf');
+            });
         }
     });
-</script>
-
-
-
+    </script>
 </body>
 </html>
