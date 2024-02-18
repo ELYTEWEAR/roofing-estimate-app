@@ -118,5 +118,28 @@ button[type="submit"]:hover {
     color: #666;
 }
 
-/* Add any additional styles you need here */
+/* Additional styles */
+.outside-work,
+.costs-and-labor,
+.signatures {
+    border-bottom: 2px solid #ccc;
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+}
+
+.pricing-options {
+    margin-top: 5px;
+}
+
+.image-preview {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.image-preview img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-top: 10px;
+}
 
