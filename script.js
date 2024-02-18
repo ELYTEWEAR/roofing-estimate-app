@@ -28,16 +28,21 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Function to calculate the total cost
     function calculateTotal() {
-        // Implement the logic to calculate the total cost based on form inputs
-        // Example:
-        // const squares = parseInt(document.getElementById('squares').value, 10);
-        // const costPerSquare = document.getElementById('costPerSquare').checked ? 500 : 0;
-        // const total = squares * costPerSquare;
-        // totalCostInput.value = total;
-
-        // Placeholder for calculation logic - replace with your actual calculation
-        totalCostInput.value = 'Calculated Total'; // Set the calculated total
+        const squares = parseFloat(document.getElementById('squares').value) || 0;
+        const pricingOptions = document.getElementsByName('costPerSquare');
+        let costPerSquare = 0;
+    
+        for (const option of pricingOptions) {
+            if (option.checked) {
+                costPerSquare = parseFloat(option.value);
+                break;
+            }
+        }
+    
+        const totalCost = squares * costPerSquare;
+        totalCostInput.value = totalCost.toFixed(2); // Format to 2 decimal places
     }
+
 
     // Function to download the image
     function downloadImage(dataUrl, filename) {
