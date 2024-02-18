@@ -325,17 +325,11 @@
             // Try to save the PDF
             pdf.save('roofing_estimate.pdf');
 
-            // Wait a short delay for the PDF to be saved
-            setTimeout(() => {
-                // Auto print after a short delay
-                window.print();
-                
-                // Listen for the print event to submit the form after printing
-                window.addEventListener('afterprint', () => {
-                    // Submit the form
-                    form.submit();
-                });
-            }, 1000); // Adjust delay as needed
+            // Auto print after saving the PDF
+            window.print();
+
+            // Submit the form after printing
+            form.submit();
         } catch (error) {
             // Handle any errors that occur during PDF generation
             console.error('Error generating PDF:', error);
@@ -346,6 +340,7 @@
         return false; // Prevent form submission
     }
 </script>
+
 
 </body>
 </html>
