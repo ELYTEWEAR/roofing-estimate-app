@@ -348,10 +348,9 @@
             }
     
             // Initialize coordinates and settings
-            let y = 20; // Starting Y with a bit more space
+            let y = 20; // Starting Y with more space
             const xLeft = 15; // Left column X position
             const xRight = 110; // Right column X position
-            const columnWidth = 95; // Adjusted width for both columns
     
             // Company Info and Title at the top
             doc.setFontSize(12);
@@ -361,7 +360,7 @@
             doc.text("Roofing Estimate", 105, y, { align: 'center' });
             y += 10; // Space before starting content
     
-            // Estimate Content in two columns, excluding signature fields
+            // Main content excluding signature and date fields
             const excludedFields = ['Signature 1', 'Date 1', 'Signature 2', 'Date 2'];
             const entries = Array.from(formData.entries()).filter(entry => !excludedFields.includes(entry[0]));
             let column = 'left';
@@ -369,8 +368,7 @@
             entries.forEach(([key, value]) => {
                 if (column === 'left') {
                     doc.setFontSize(10);
-                    const formattedKey = formatFieldName(key);
-                    doc.text(`${formattedKey}: ${value}`, xLeft, y);
+                    doc.text(`${formatFieldName(key)}: ${value}`, xLeft, y);
                     column = 'right';
                 } else {
                     doc.text(`${formatFieldName(key)}: ${value}`, xRight, y);
@@ -384,7 +382,7 @@
             doc.setFontSize(9);
             doc.text("Terms and Conditions", 105, y, { align: 'center' });
             y += 5;
-            let termsText = `All material is guaranteed to be as specified. Any alteration from above specifications involving extra costs will be executed upon written orders. Owens Construction is not responsible for ice damage on the roof. All agreements are contingent upon strikes, accidents, or delays beyond our control. 50% payment upfront, and 50% upon completion.`;
+            let termsText = "Your specific terms and conditions text here, ensuring it's concise to fit the allocated space appropriately.";
             doc.splitTextToSize(termsText, 180).forEach(line => {
                 doc.text(line, 15, y);
                 y += 4; // Tighter line spacing for terms
@@ -406,6 +404,7 @@
         // Attach event listener to form's submit event
         document.getElementById('estimateForm').addEventListener('submit', generateEstimate);
     </script>
+
 
 
 
