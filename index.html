@@ -310,7 +310,7 @@
             printableContent += '.title { color: #007bff; font-size: 24px; margin-bottom: 10px; }'; // Style titles
             printableContent += '.content { margin-left: 20px; }'; // Add margin to content for better readability
             printableContent += '</style>';
-            
+
             printableContent += '<h1 class="title">Estimate Sheet Roofing</h1>';
             printableContent += '<h2 class="title">Owen\'s Construction</h2>';
             printableContent += '<div class="content">';
@@ -324,7 +324,7 @@
             printableContent += 'Professional Workmanship<br>';
             printableContent += '1 Year Labor Guarantee</p>';
             printableContent += '</div>';
-        
+
             printableContent += '<div class="section">';
             printableContent += '<h2 class="title">Customer Information</h2>';
             printableContent += '<div class="content">';
@@ -332,7 +332,7 @@
             printableContent += '<p><strong>Customer Address:</strong> ' + formData.get('customerAddress') + '</p>';
             printableContent += '</div>';
             printableContent += '</div>';
-            
+
             printableContent += '<div class="section">';
             printableContent += '<h2 class="title">Outside Work</h2>';
             printableContent += '<div class="content">';
@@ -380,17 +380,17 @@
             printableContent += '<p>' + formData.get('plywoodSheetsOSB') + '</p>';
             printableContent += '</div>';
             printableContent += '</div>';
-            
+
             printableContent += '<div class="section">';
             printableContent += '<h2 class="title">Costs and Labor</h2>';
             printableContent += '<div class="content">';
             printableContent += '<p><strong>Total for Cost and Labor:</strong></p>';
-            printableContent += '<p>$' + formData.get('totalCost') + '</p>';
+            printableContent += '<p>$' + formatCostPerSquare(formData.get('totalCost')) + '</p>'; // Corrected from formData.get('totalCost') to formatCostPerSquare
             printableContent += '<p><strong>Miscellaneous:</strong></p>';
             printableContent += '<p>' + formData.get('misc') + '</p>';
             printableContent += '</div>';
             printableContent += '</div>';
-            
+
             printableContent += '<div class="section">';
             printableContent += '<h2 class="title">Terms and Conditions</h2>';
             printableContent += '<div class="content">';
@@ -399,7 +399,7 @@
             printableContent += '<p>IN ACCORDANCE AND PURSUANT TO THE TERMS AND CONDITIONS OF OHIO REVISED CODE SECTION 1345.23 "HOME SOLICITATION ACT" THE HOMEOWNER SHALL HAVE THREE (3) BUSINESS DAYS TO CANCEL THE FOREGOING PROPOSAL/CONTRACT BY MIDNIGHT OF THE THIRD DAY.</p>';
             printableContent += '</div>';
             printableContent += '</div>';
-            
+
             printableContent += '<div class="section">';
             printableContent += '<h2 class="title">Signatures</h2>';
             printableContent += '<div class="content">';
@@ -407,7 +407,7 @@
             printableContent += '<p><strong>Signature 2:</strong> ' + formData.get('signature2') + ' <strong>Date:</strong> ' + formData.get('date2') + '</p>';
             printableContent += '</div>';
             printableContent += '</div>';
-            
+
             return printableContent;
         }
 
@@ -450,6 +450,7 @@
             });
         }
     });
-    </script>
+</script>
+
 </body>
 </html>
