@@ -372,7 +372,6 @@
             newWindow.document.write('<div class="container">');
             newWindow.document.write('<h1>Owens Construction Roofing Estimate</h1>');
             newWindow.document.write(`<p>${estimateContent}</p>`);
-            newWindow.document.write('</div>');
             newWindow.document.write('<div class="footer">');
             newWindow.document.write('<h2>Owen\'s Construction</h2>');
             newWindow.document.write('<p>Insurance Specialists<br>');
@@ -384,7 +383,7 @@
             newWindow.document.write('Fully Insured & Bonded<br>');
             newWindow.document.write('Professional Workmanship<br>');
             newWindow.document.write('1 Year Labor Guarantee</p>');
-            newWindow.document.write('</div></body></html>');
+            newWindow.document.write('</div></div></body></html>');
     
             // Wait for a short delay for content to be fully rendered, then print
             setTimeout(() => {
@@ -396,6 +395,7 @@
         // Attach the event listener to the form's submit event
         document.getElementById('estimateForm').addEventListener('submit', generateEstimate);
     </script>
+
 
 
 
