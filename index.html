@@ -31,7 +31,7 @@
             <p>Please fill out the details below to generate a roofing estimate.</p>
         </header>
 
-        <form id="estimateForm">
+        <form id="estimateForm" onsubmit="return generateEstimate()">
             <!-- Customer Name -->
             <div class="form-row">
                 <label for="customerName">Customer Name:</label>
@@ -81,7 +81,7 @@
                     </select>
                 </div>
 
-               <div class="form-row">
+                <div class="form-row">
                     <label for="squares">Number of Squares: </label>
                     <input type="number" id="squares" name="squares">
                 
@@ -308,17 +308,24 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script>
-        function printContent() {
-            const content = document.getElementById('printContainer').innerHTML;
-            const printWindow = window.open('', '_blank');
-            printWindow.document.open();
-            printWindow.document.write('<html><head><title>Print</title></head><body>');
-            printWindow.document.write('<div id="printContainer">' + content + '</div>');
-            printWindow.document.write('</body></html>');
-            printWindow.document.close();
-            printWindow.focus();
-            printWindow.print();
-            printWindow.close();
+        function generateEstimate() {
+            const form = document.getElementById('estimateForm');
+            const formData = new FormData(form);
+            let estimateContent = '';
+
+            for (const [key, value] of formData.entries()) {
+                estimateContent += `${key}: ${value}\n`;
+            }
+
+            // Generate PDF
+            const pdf = new jsPDF();
+            pdf.text(10, 10, estimateContent);
+            pdf.save('roofing_estimate.pdf');
+
+            // Auto print
+            window.print();
+            
+            return false; // Prevent form submission
         }
     </script>
 </body>
