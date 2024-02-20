@@ -329,77 +329,75 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script>
-        function generateEstimate(event) {
-            event.preventDefault(); // Prevent the default form submission
+      function generateEstimate(event) {
+        event.preventDefault();
     
-            const { jsPDF } = window.jspdf;
-            const doc = new jsPDF({
-                orientation: 'portrait',
-                unit: 'mm',
-                format: 'a4'
-            });
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF({
+          orientation: 'portrait',
+          unit: 'mm',
+          format: 'a4'
+        });
     
-            const form = document.getElementById('estimateForm');
-            const formData = new FormData(form);
+        const form = document.getElementById('estimateForm');
+        const formData = new FormData(form);
     
-            // Add company logo
-            // Note: You need to have the logo available as a base64-encoded image or a URL
-            // doc.addImage(logo, 'format', x, y, width, height);
-            // Example: doc.addImage('logo_base64_string', 'JPEG', 10, 10, 30, 30);
+        // Placeholder for company logo
+        // Replace 'your_logo_url' with the path to your logo
+        // doc.addImage('your_logo_url', 'JPEG', 10, 10, 40, 20);
     
-            // Set starting position after logo
-            let y = 50;
+        // Header
+        doc.setFontSize(18);
+        doc.setFont("times", "bold");
+        doc.text(105, 40, "Roofing Estimate", null, null, 'center');
     
-            // Header with company and estimate info
-            doc.setFont("helvetica");
-            doc.setFontSize(12);
-            doc.setFontStyle('bold');
-            doc.text("Owen's Construction Roofing Estimate", 105, 15, null, null, 'center'); // Centered title
+        // Sub-header
+        doc.setFontSize(12);
+        doc.setFont("times", "normal");
+        doc.text(105, 50, "Owens Construction - Insurance Specialists", null, null, 'center');
     
-            // Sub-header with contact info
-            doc.setFontSize(10);
-            doc.setFontStyle('normal');
-            doc.text("Phone: (330) 507-5195 | Email: mykal372002@yahoo.com | www.owensroofs.com", 105, 25, null, null, 'center'); // Centered sub-header
+        // Contact Info
+        doc.setFontSize(10);
+        doc.text("Phone: (330) 507-5195 | Email: mykal372002@yahoo.com | www.owensroofs.com", 105, 55, null, null, 'center');
     
-            // Customer Info Section
-            doc.setFontSize(11);
-            doc.text("Customer Information:", 10, y);
-            y += 10;
+        // Draw a line
+        doc.setDrawColor(0);
+        doc.setLineWidth(1);
+        doc.line(10, 60, 200, 60);
     
-            // Loop through form data for customer and job details
-            formData.forEach((value, key) => {
-                if (y > 260) { // Avoid writing beyond one page, adjust value per your content
-                    doc.addPage();
-                    y = 10; // Reset y position for new page
-                }
-                doc.setFontSize(10);
-                doc.text(`${key}: ${value}`, 10, y);
-                y += 6;
-            });
+        let y = 70;
     
-            // Terms and Conditions Section
-            doc.setFontSize(11);
-            doc.text("Terms and Conditions:", 10, y + 10);
-            doc.setFontSize(10);
-            let termsText = `All material is guaranteed to be as specified, and the above work to be performed in accordance with the drawings and specifications submitted for above work and completed in a substantial workmanlike manner for the sum of ${formData.get('agreedSum')}. Any alteration or deviation from above specifications involving extra costs will be executed only upon written orders, and will become an extra charge over and above the estimate. Owens Construction is not responsible for ice damage occurred on the roof. All agreements contingent upon strikes, accidents, or delays beyond our control. 50% money up front and 50% money on completion.
+        // Customer and job details
+        doc.setFontSize(11);
+        formData.forEach((value, key) => {
+          if (y > 280) {
+            doc.addPage();
+            y = 10;
+          }
+          doc.text(20, y, `${key}: ${value}`);
+          y += 8;
+        });
     
-    Acceptance of Proposal: Owens Construction and ${formData.get('clientName')} agree to the work with the money given from the insurance company, at no cost above or below the written amount including the depreciation. Any unforeseen expenses will be taken up with the insurance company and adjuster as a supplement.
+        // Terms and Conditions
+        y += 10;
+        doc.setFontSize(10);
+        let termsText = `All material is guaranteed to be as specified. Any alteration from above specifications involving extra costs will be executed only upon written orders, and will become an extra charge over and above the estimate. 50% upfront, 50% upon completion.`;
+        let splitText = doc.splitTextToSize(termsText, 180);
+        splitText.forEach(line => {
+          doc.text(20, y, line);
+          y += 6;
+        });
     
-    IN ACCORDANCE AND PURSUANT TO THE TERMS AND CONDITIONS OF OHIO REVISED CODE SECTION 1345.23 "HOME SOLICITATION ACT" THE HOMEOWNER SHALL HAVE THREE (3) BUSINESS DAYS TO CANCEL THE FOREGOING PROPOSAL/CONTRACT BY MIDNIGHT OF THE THIRD DAY.`;
-            doc.text(doc.splitTextToSize(termsText, 180), 10, y + 20);
+        // Signature
+        y += 10;
+        doc.text(20, y, "Signature: ______________________________  Date: _______________");
     
-            // Signature Section
-            // Adjust y as needed based on the length of your terms and conditions
-            y += 60; // Example adjustment
-            doc.text("Signature: ______________________________  Date: _______________", 10, y);
+        doc.save('RoofingEstimate.pdf');
+      }
     
-            // Save the PDF
-            doc.save('RoofingEstimate.pdf');
-        }
-    
-        // Attach event listener to form's submit event
-        document.getElementById('estimateForm').addEventListener('submit', generateEstimate);
+      document.getElementById('estimateForm').addEventListener('submit', generateEstimate);
     </script>
+
 
 
 
