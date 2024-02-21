@@ -329,7 +329,7 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script>
-      function generateEstimate(event) {
+      async function generateEstimate(event) {
         event.preventDefault();
     
         const { jsPDF } = window.jspdf;
@@ -342,61 +342,93 @@
         const form = document.getElementById('estimateForm');
         const formData = new FormData(form);
     
-        // Placeholder for company logo
+        // Logo and Branding
         // Replace 'your_logo_url' with the path to your logo
-        // doc.addImage('your_logo_url', 'JPEG', 10, 10, 40, 20);
+        // const logo = await fetch('your_logo_url').then(res => res.blob());
+        // const logoURL = URL.createObjectURL(logo);
+        // doc.addImage(logoURL, 'JPEG', 10, 10, 50, 25);
     
-        // Header
-        doc.setFontSize(18);
-        doc.setFont("times", "bold");
-        doc.text(105, 40, "Roofing Estimate", null, null, 'center');
+        // Document Title
+        doc.setFontSize(20);
+        doc.setFont("helvetica", "bold");
+        doc.setTextColor(31, 78, 121); // Company's primary color
+        doc.text("Estimate", 105, 40, null, null, 'center');
     
-        // Sub-header
-        doc.setFontSize(12);
-        doc.setFont("times", "normal");
-        doc.text(105, 50, "Owens Construction - Insurance Specialists", null, null, 'center');
-    
-        // Contact Info
-        doc.setFontSize(10);
-        doc.text("Phone: (330) 507-5195 | Email: mykal372002@yahoo.com | www.owensroofs.com", 105, 55, null, null, 'center');
-    
-        // Draw a line
-        doc.setDrawColor(0);
-        doc.setLineWidth(1);
-        doc.line(10, 60, 200, 60);
-    
-        let y = 70;
-    
-        // Customer and job details
+        // Business Information
         doc.setFontSize(11);
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(70, 70, 70);
+        doc.text("Owens Construction - Insurance Specialists", 105, 50, null, null, 'center');
+        doc.text("Registered No. 1234567", 105, 55, null, null, 'center');
+        doc.text("123 Owens Street, Roofing City, RC 12345", 105, 60, null, null, 'center');
+        doc.text("Phone: (330) 507-5195 | Email: mykal372002@yahoo.com | www.owensroofs.com", 105, 65, null, null, 'center');
+    
+        // Line Separator
+        doc.setDrawColor(31, 78, 121); // Matching the company's primary color
+        doc.setLineWidth(0.3);
+        doc.line(10, 70, 200, 70);
+    
+        // Estimate Details Header
+        doc.setTextColor(31, 78, 121);
+        doc.setFontSize(14);
+        doc.setFont("helvetica", "bold");
+        doc.text("Estimate Details", 20, 80);
+    
+        // Customer and Job Details
+        let y = 88; // Starting Y position for the details
+        doc.setFontSize(11);
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(50, 50, 50);
         formData.forEach((value, key) => {
           if (y > 280) {
             doc.addPage();
             y = 10;
           }
-          doc.text(20, y, `${key}: ${value}`);
+          doc.text(20, y, `${key}: ${value}`, { maxWidth: 170 });
           y += 8;
         });
     
         // Terms and Conditions
+        doc.setTextColor(31, 78, 121);
+        doc.setFontSize(14);
+        doc.setFont("helvetica", "bold");
         y += 10;
+        doc.text("Terms and Conditions", 20, y);
+    
+        y += 6;
         doc.setFontSize(10);
-        let termsText = `All material is guaranteed to be as specified. Any alteration from above specifications involving extra costs will be executed only upon written orders, and will become an extra charge over and above the estimate. 50% upfront, 50% upon completion.`;
-        let splitText = doc.splitTextToSize(termsText, 180);
-        splitText.forEach(line => {
-          doc.text(20, y, line);
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(50, 50, 50);
+        let termsText = "All material is guaranteed to be as specified. Work will be completed in a professional manner according to standard practices. Any additional work or equipment required will be billed separately. Payment is due upon receipt of this estimate.";
+        let splitTerms = doc.splitTextToSize(termsText, 180);
+        splitTerms.forEach(line => {
           y += 6;
+          if (y > 280) {
+            doc.addPage();
+            y = 10;
+          }
+          doc.text(20, y, line);
         });
     
-        // Signature
+        // Confidentiality Note
         y += 10;
-        doc.text(20, y, "Signature: ______________________________  Date: _______________");
+        doc.setFontSize(9);
+        doc.setTextColor(120, 120, 120);
+        doc.text(20, y, "This estimate is confidential and intended only for the recipient. Unauthorized sharing is strictly prohibited.");
     
-        doc.save('RoofingEstimate.pdf');
+        // Signature Line
+        y += 10;
+        doc.setFontSize(11);
+        doc.setTextColor(50, 50, 50);
+        doc.text(20, y, "Signature: ______________________________  Date: _______________", { maxWidth: 180 });
+    
+        // Save the document
+        doc.save('ProfessionalRoofingEstimate.pdf');
       }
     
       document.getElementById('estimateForm').addEventListener('submit', generateEstimate);
     </script>
+
 
 
 
