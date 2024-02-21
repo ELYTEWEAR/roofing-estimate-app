@@ -329,9 +329,7 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script>
-      async function generateEstimate(event) {
-        event.preventDefault();
-    
+      function generateEstimate() {
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF({
           orientation: 'portrait',
@@ -339,95 +337,61 @@
           format: 'a4'
         });
     
-        const form = document.getElementById('estimateForm');
-        const formData = new FormData(form);
+        // Company Logo and Header
+        // Replace 'your_logo_url' with the actual URL of your logo
+        // const logoUrl = 'your_logo_url';
+        // doc.addImage(logoUrl, 'JPEG', 10, 10, 40, 20); // Adjust dimensions as needed
     
-        // Logo and Branding
-        // Replace 'your_logo_url' with the path to your logo
-        // const logo = await fetch('your_logo_url').then(res => res.blob());
-        // const logoURL = URL.createObjectURL(logo);
-        // doc.addImage(logoURL, 'JPEG', 10, 10, 50, 25);
-    
-        // Document Title
+        doc.setFont("helvetica", "bold");
         doc.setFontSize(20);
-        doc.setFont("helvetica", "bold");
-        doc.setTextColor(31, 78, 121); // Company's primary color
-        doc.text("Estimate", 105, 40, null, null, 'center');
+        doc.text("Roofing Estimate", 105, 30, null, null, 'center');
     
-        // Business Information
+        // Company Information
         doc.setFontSize(11);
         doc.setFont("helvetica", "normal");
-        doc.setTextColor(70, 70, 70);
-        doc.text("Owens Construction - Insurance Specialists", 105, 50, null, null, 'center');
-        doc.text("Registered No. 1234567", 105, 55, null, null, 'center');
-        doc.text("123 Owens Street, Roofing City, RC 12345", 105, 60, null, null, 'center');
-        doc.text("Phone: (330) 507-5195 | Email: mykal372002@yahoo.com | www.owensroofs.com", 105, 65, null, null, 'center');
+        doc.text("Owens Construction - Insurance Specialists", 105, 40, null, null, 'center');
+        doc.setFontSize(10);
+        doc.text("Phone: (330) 507-5195 | Email: mykal372002@yahoo.com | www.owensroofs.com", 105, 45, null, null, 'center');
     
-        // Line Separator
-        doc.setDrawColor(31, 78, 121); // Matching the company's primary color
-        doc.setLineWidth(0.3);
-        doc.line(10, 70, 200, 70);
+        // Section Divider
+        doc.setLineWidth(0.2);
+        doc.line(10, 50, 200, 50);
     
-        // Estimate Details Header
-        doc.setTextColor(31, 78, 121);
-        doc.setFontSize(14);
-        doc.setFont("helvetica", "bold");
-        doc.text("Estimate Details", 20, 80);
-    
-        // Customer and Job Details
-        let y = 88; // Starting Y position for the details
-        doc.setFontSize(11);
-        doc.setFont("helvetica", "normal");
-        doc.setTextColor(50, 50, 50);
-        formData.forEach((value, key) => {
-          if (y > 280) {
-            doc.addPage();
-            y = 10;
-          }
-          doc.text(20, y, `${key}: ${value}`, { maxWidth: 170 });
-          y += 8;
+        // Customer and Job Details Placeholder
+        // Dynamically filled with provided information. Example provided for illustration.
+        doc.setFontSize(10);
+        const customerDetails = [
+          { key: "Customer Name", value: "John Doe" },
+          { key: "Address", value: "123 Main St, Anytown, AN 12345" },
+          { key: "Project", value: "Roof Replacement" },
+          { key: "Date", value: "2024-02-21" }
+          // Add more details as required
+        ];
+        let y = 58;
+        customerDetails.forEach(detail => {
+          doc.text(20, y, `${detail.key}: ${detail.value}`);
+          y += 6;
         });
     
         // Terms and Conditions
-        doc.setTextColor(31, 78, 121);
-        doc.setFontSize(14);
-        doc.setFont("helvetica", "bold");
-        y += 10;
-        doc.text("Terms and Conditions", 20, y);
-    
-        y += 6;
-        doc.setFontSize(10);
-        doc.setFont("helvetica", "normal");
-        doc.setTextColor(50, 50, 50);
-        let termsText = "All material is guaranteed to be as specified. Work will be completed in a professional manner according to standard practices. Any additional work or equipment required will be billed separately. Payment is due upon receipt of this estimate.";
-        let splitTerms = doc.splitTextToSize(termsText, 180);
-        splitTerms.forEach(line => {
-          y += 6;
-          if (y > 280) {
-            doc.addPage();
-            y = 10;
-          }
-          doc.text(20, y, line);
-        });
-    
-        // Confidentiality Note
-        y += 10;
         doc.setFontSize(9);
-        doc.setTextColor(120, 120, 120);
-        doc.text(20, y, "This estimate is confidential and intended only for the recipient. Unauthorized sharing is strictly prohibited.");
+        doc.text(20, y + 10, "Terms and Conditions:", { maxWidth: 180 });
+        const termsText = "All material is guaranteed to be as specified. Any alteration from above specifications involving extra costs will be executed only upon written orders, and will become an extra charge over and above the estimate. 50% upfront, 50% upon completion.";
+        const splitTerms = doc.splitTextToSize(termsText, 180);
+        doc.text(20, y + 16, splitTerms, { maxWidth: 180 });
     
         // Signature Line
-        y += 10;
-        doc.setFontSize(11);
-        doc.setTextColor(50, 50, 50);
-        doc.text(20, y, "Signature: ______________________________  Date: _______________", { maxWidth: 180 });
+        const signatureY = y + 16 + splitTerms.length * 6 + 10; // Adjust based on terms length
+        doc.text(20, signatureY, "Signature: ______________________________  Date: _______________");
     
         // Save the document
-        doc.save('ProfessionalRoofingEstimate.pdf');
+        doc.save('RoofingEstimate.pdf');
       }
     
-      document.getElementById('estimateForm').addEventListener('submit', generateEstimate);
+      // Trigger the PDF generation
+      generateEstimate();
     </script>
+
 
 
 
