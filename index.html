@@ -329,7 +329,9 @@
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>
     <script>
-      function generateEstimate() {
+      function generateEstimate(event) {
+        event.preventDefault();
+    
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF({
           orientation: 'portrait',
@@ -337,59 +339,63 @@
           format: 'a4'
         });
     
-        // Company Logo and Header
-        // Replace 'your_logo_url' with the actual URL of your logo
-        // const logoUrl = 'your_logo_url';
-        // doc.addImage(logoUrl, 'JPEG', 10, 10, 40, 20); // Adjust dimensions as needed
+        const form = document.getElementById('estimateForm');
+        const formData = new FormData(form);
     
-        doc.setFont("helvetica", "bold");
-        doc.setFontSize(20);
-        doc.text("Roofing Estimate", 105, 30, null, null, 'center');
+        // Placeholder for company logo
+        // Replace 'your_logo_url' with the path to your logo
+        // doc.addImage('your_logo_url', 'JPEG', 10, 10, 40, 20);
     
-        // Company Information
+        // Header
+        doc.setFontSize(18);
+        doc.setFont("times", "bold");
+        doc.text(105, 40, "Roofing Estimate", null, null, 'center');
+    
+        // Sub-header
+        doc.setFontSize(12);
+        doc.setFont("times", "normal");
+        doc.text(105, 50, "Owens Construction - Insurance Specialists", null, null, 'center');
+    
+        // Contact Info
+        doc.setFontSize(10);
+        doc.text("Phone: (330) 507-5195 | Email: mykal372002@yahoo.com | www.owensroofs.com", 105, 55, null, null, 'center');
+    
+        // Draw a line
+        doc.setDrawColor(0);
+        doc.setLineWidth(1);
+        doc.line(10, 60, 200, 60);
+    
+        let y = 70;
+    
+        // Customer and job details
         doc.setFontSize(11);
-        doc.setFont("helvetica", "normal");
-        doc.text("Owens Construction - Insurance Specialists", 105, 40, null, null, 'center');
-        doc.setFontSize(10);
-        doc.text("Phone: (330) 507-5195 | Email: mykal372002@yahoo.com | www.owensroofs.com", 105, 45, null, null, 'center');
-    
-        // Section Divider
-        doc.setLineWidth(0.2);
-        doc.line(10, 50, 200, 50);
-    
-        // Customer and Job Details Placeholder
-        // Dynamically filled with provided information. Example provided for illustration.
-        doc.setFontSize(10);
-        const customerDetails = [
-          { key: "Customer Name", value: "John Doe" },
-          { key: "Address", value: "123 Main St, Anytown, AN 12345" },
-          { key: "Project", value: "Roof Replacement" },
-          { key: "Date", value: "2024-02-21" }
-          // Add more details as required
-        ];
-        let y = 58;
-        customerDetails.forEach(detail => {
-          doc.text(20, y, `${detail.key}: ${detail.value}`);
-          y += 6;
+        formData.forEach((value, key) => {
+          if (y > 280) {
+            doc.addPage();
+            y = 10;
+          }
+          doc.text(20, y, `${key}: ${value}`);
+          y += 8;
         });
     
         // Terms and Conditions
-        doc.setFontSize(9);
-        doc.text(20, y + 10, "Terms and Conditions:", { maxWidth: 180 });
-        const termsText = "All material is guaranteed to be as specified. Any alteration from above specifications involving extra costs will be executed only upon written orders, and will become an extra charge over and above the estimate. 50% upfront, 50% upon completion.";
-        const splitTerms = doc.splitTextToSize(termsText, 180);
-        doc.text(20, y + 16, splitTerms, { maxWidth: 180 });
+        y += 10;
+        doc.setFontSize(10);
+        let termsText = `All material is guaranteed to be as specified. Any alteration from above specifications involving extra costs will be executed only upon written orders, and will become an extra charge over and above the estimate. 50% upfront, 50% upon completion.`;
+        let splitText = doc.splitTextToSize(termsText, 180);
+        splitText.forEach(line => {
+          doc.text(20, y, line);
+          y += 6;
+        });
     
-        // Signature Line
-        const signatureY = y + 16 + splitTerms.length * 6 + 10; // Adjust based on terms length
-        doc.text(20, signatureY, "Signature: ______________________________  Date: _______________");
+        // Signature
+        y += 10;
+        doc.text(20, y, "Signature: ______________________________  Date: _______________");
     
-        // Save the document
         doc.save('RoofingEstimate.pdf');
       }
     
-      // Trigger the PDF generation
-      generateEstimate();
+      document.getElementById('estimateForm').addEventListener('submit', generateEstimate);
     </script>
 
 
